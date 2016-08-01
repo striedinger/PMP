@@ -1,0 +1,53 @@
+/* Questions */
+.question {
+    padding: 15px;
+    background-color: #fafafa;
+    border-left: 6px solid #7f7f84;
+    margin-bottom: 10px;
+    -webkit-box-shadow: 0 5px 8px -6px rgba(0,0,0,.2);
+       -moz-box-shadow: 0 5px 8px -6px rgba(0,0,0,.2);
+            box-shadow: 0 5px 8px -6px rgba(0,0,0,.2);
+}
+
+.question:hover{
+	cursor: pointer;
+    -webkit-box-shadow: 0 1px 1px 0 rgba(0,0,0,.4);
+  	box-shadow: 0 1px 1px 0 rgba(0,0,0,.3);
+}
+
+.question:hover >p{
+	font-weight:bold;
+}
+
+.question-sm {
+    padding: 10px;
+    font-size: 80%;
+}
+.question-lg {
+    padding: 35px;
+    font-size: large;
+}
+.question-success {
+    border-color: #80D651;
+}
+.question-success>p {
+    color: #80D651;
+}
+.question-info {
+    border-color: #45ABCD;
+}
+.question-info>strong {
+    color: #45ABCD;
+}
+.question-warning {
+    border-color: #FEAF20;
+}
+.question-warning>strong {
+    color: #FEAF20;
+}
+.question-danger {
+    border-color: #d73814;
+}
+.question-danger>p {
+    color: #d73814;
+}
