@@ -32,4 +32,8 @@ class User extends Authenticatable implements HasRoleAndPermissionContract
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    public function sessions(){
+        return $this->hasMany(Session::class);
+    }
 }

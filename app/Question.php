@@ -13,6 +13,8 @@ class Question extends Model
 
     protected $fillable = ['question', 'description', 'optionA', 'optionB', 'optionC', 'optionD', 'answer', 'process_id','area_id', 'active'];
 
+    protected $with = ['area', 'process'];
+
     public function process(){
     	return $this->belongsTo(Process::class);
     }

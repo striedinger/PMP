@@ -34,7 +34,14 @@ Preguntas
 					<td>{{ $question->process->name }}</td>
 					<td>{{ $question->active? 'Sí' : 'No' }}</td>
 					<td>
+						{!! Form::open(['action' => array('QuestionController@delete', $question->id), 'method' => 'post'])!!}
+						{{ method_field('DELETE') }}
 						<a href="{{ url('/questions/update') . '/' . $question->id }}" class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i></a>
+						<button class="btn btn-danger btn-xs" onclick="return confirm('¿Esta seguro de querer borrar la pregunta?');">
+  							<i class="fa fa-trash-o" title="Borrar" aria-hidden="true"></i>
+  							<span class="sr-only">Borrar</span>
+						</button>
+						{!! Form::close() !!}
 					</td>
 				</tr>
 			@endforeach

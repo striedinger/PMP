@@ -21,8 +21,8 @@ Examenes
 				<th>#</th>
 				<th>Nombre</th>
 				<th>No. de Preguntas</th>
-				<th>Duracion</th>
-				<th>¿Por Area?</th>
+				<th>Duracion (min)</th>
+				<th>Tipo</th>
 				<th>Acciones</th>
 			</thead>
 			<tbody>
@@ -32,9 +32,16 @@ Examenes
 					<td>{{ $exam->name }}</td>
 					<td>{{ $exam->questions }}</td>
 					<td>{{ $exam->duration }}</td>
-					<td>{{ $exam->byArea? 'Sí' : 'No' }}</td>
+					<td>{{ $exam->type }}</td>
 					<td>
+						{!! Form::open(['action' => array('ExamController@delete', $exam->id), 'method' => 'post'])!!}
+						{{ method_field('DELETE') }}
 						<a href="{{ url('/exams/update') . '/' . $exam->id }}" class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i></a>
+						<button class="btn btn-danger btn-xs" onclick="return confirm('¿Esta seguro de querer borrar al examen?');">
+  							<i class="fa fa-trash-o" title="Borrar" aria-hidden="true"></i>
+  							<span class="sr-only">Borrar</span>
+						</button>
+						{!! Form::close() !!}
 					</td>
 				</tr>
 			@endforeach

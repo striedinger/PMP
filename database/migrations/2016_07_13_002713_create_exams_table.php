@@ -18,7 +18,7 @@ class CreateExamsTable extends Migration
             $table->text('description')->nullable();
             $table->integer('duration');
             $table->integer('questions');
-            $table->boolean('byArea')->default(false);
+            $table->enum('type', ['Aleatorio', 'Area', 'Proceso']);
             $table->timestamps();
             $table->softDeletes();
         });

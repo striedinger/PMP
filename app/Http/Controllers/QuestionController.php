@@ -13,6 +13,7 @@ class QuestionController extends Controller
 
     public function __construct(QuestionRepository $questions){
     	$this->middleware('auth');
+        $this->middleware('role:admin');
     	$this->questions = $questions;
     }
 
@@ -94,6 +95,20 @@ class QuestionController extends Controller
                 'areas' => $areas,
                 'processes' => $processes
             ]);
+        }else{
+            abort(404);
+        }
+    }
+
+    public function delete(Request $request, $id){
+        if($question = $this->questions->forId($id)){
+            if($request->user()->isAdmin()){
+                $question->delete();
+                $request->session()->flash('status', 'La pregunta ha sido eliminada');
+                return redirect('/questions/');
+            }else{
+                abort(403, 'No autorizado');
+            }
         }else{
             abort(404);
         }

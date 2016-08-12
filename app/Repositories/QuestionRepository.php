@@ -6,7 +6,7 @@ use App\Question;
 
 class QuestionRepository{
 	public function all(){
-		return Question::paginate(50);
+		return Question::paginate(20);
 	}
 
 	public function forId($id){

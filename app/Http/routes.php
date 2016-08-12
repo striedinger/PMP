@@ -11,6 +11,15 @@
 |
 */
 
+app('Dingo\Api\Transformer\Factory')->register('Answer', 'AnswerTransformer');
+
+$api = app('Dingo\Api\Routing\Router');
+
+$api->version('v1', function ($api) {
+	$api->get('/sessions/{id}/questions', 'App\Http\Controllers\ApiController@questions');
+	$api->post('/sessions/{id}', 'App\Http\Controllers\ApiController@saveAnswer');
+});
+
 Route::get('/', function () {
     return view('welcome');
 });
@@ -27,6 +36,8 @@ Route::get('/users/update/{id}', 'UserController@update');
 
 Route::post('/users/update/{id}', 'UserController@update');
 
+Route::delete('/users/delete/{id}', 'UserController@delete');
+
 //Exams
 
 Route::get('/exams', 'ExamController@index');
@@ -38,6 +49,8 @@ Route::post('/exams/create', 'ExamController@create');
 Route::get('/exams/update/{id}', 'ExamController@update');
 
 Route::post('/exams/update/{id}', 'ExamController@update');
+
+Route::delete('/exams/delete/{id}', 'ExamController@delete');
 
 //Questions
 
@@ -51,10 +64,16 @@ Route::get('/questions/update/{id}', 'QuestionController@update');
 
 Route::post('/questions/update/{id}', 'QuestionController@update');
 
+Route::delete('/questions/delete/{id}', 'QuestionController@delete');
+
 //Sessions
 
 Route::get('/sessions/{id}', function(){
 	return view('sessions.update');
+});
+
+Route::get('/test', function(){
+	return App\Question::all()->toJSON();
 });
 
 

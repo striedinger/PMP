@@ -16,7 +16,7 @@ Crear Examen
 			Crear Examen
 		</div>
 		<div class="panel-body">
-			<form method="post">
+			<form method="post" action>
 				{{ csrf_field() }}
 				<div class="form-group">
 					<label>Nombre</label>
@@ -55,14 +55,15 @@ Crear Examen
                     @endif
 				</div>
 				<div class="form-group">
-					<div class="checkbox">
-						<label>
-							<input type="checkbox" name="byArea"> <strong>¿Por Area de Conocimiento?</strong>
-						</label>
-					</div>
-					@if ($errors->has('byArea'))
+					<label>Tipo de Examen</label>
+					<select class="form-control" name="type">
+						<option value="Aleatorio">Aleatorio</option>
+						<option value="Area">Area de Conocimiento</option>
+						<option value="Proceso">Grupo de Proceso</option>
+					</select>
+					@if ($errors->has('type'))
                     <span class="help-block">
-                        <strong>{{ $errors->first('byArea') }}</strong>
+                        <strong>{{ $errors->first('type') }}</strong>
                     </span>
                     @endif
 				</div>

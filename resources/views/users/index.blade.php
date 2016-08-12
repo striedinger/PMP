@@ -34,7 +34,16 @@ Usuarios
 					<td>{{ $user->phone }}</td>
 					<td>{{ $user->expiration }}</td>
 					<td>
+						{!! Form::open(['action' => array('UserController@delete', $user->id), 'method' => 'post'])!!}
+						{{ method_field('DELETE') }}
 						<a href="{{ url('/users/update') . '/' . $user->id }}" class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i></a>
+						@if($user->id != Auth::user()->id)
+						<button class="btn btn-danger btn-xs" onclick="return confirm('¿Esta seguro de querer borrar al usuario?');">
+  							<i class="fa fa-trash-o" title="Borrar" aria-hidden="true"></i>
+  							<span class="sr-only">Borrar</span>
+						</button>
+						@endif
+						{!! Form::close() !!}
 					</td>
 				</tr>
 			@endforeach

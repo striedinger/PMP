@@ -13,6 +13,7 @@ class ExamController extends Controller
 
     public function __construct(ExamRepository $exams){
     	$this->middleware('auth');
+        $this->middleware('role:admin');
     	$this->exams = $exams;
     }
 
@@ -35,7 +36,7 @@ class ExamController extends Controller
                 'description' => $request->description,
                 'duration' => $request->duration,
                 'questions' => $request->questions,
-                'byArea' => $request->byArea? true: false
+                'type' => $request->type
             ]);
             $request->session()->flash('status', 'El examen ha sido creado');
             return redirect('/exams');
@@ -55,7 +56,7 @@ class ExamController extends Controller
                 $exam->description = $request->description;
                 $exam->duration = $request->duration;
                 $exam->questions = $request->questions;
-                $exam->byArea = $request->byArea? true: false;
+                $exam->type = $request->type;
                 $exam->save();
                 $request->session()->flash('status', 'El examen ha sido actualizado');
                 return redirect('/exams/update/' . $exam->id);
@@ -63,6 +64,20 @@ class ExamController extends Controller
             return view('exams.update', [
                 'exam' => $exam
             ]);
+        }else{
+            abort(404);
+        }
+    }
+
+    public function delete(Request $request, $id){
+        if($exam = $this->exams->forId($id)){
+            if($request->user()->isAdmin()){
+                $exam->delete();
+                $request->session()->flash('status', 'El examen ha sido eliminado');
+                return redirect('/exams/');
+            }else{
+                abort(403, 'No autorizado');
+            }
         }else{
             abort(404);
         }

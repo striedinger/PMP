@@ -13,6 +13,7 @@ class UserController extends Controller
 
     public function __construct(UserRepository $users){
     	$this->middleware('auth');
+        $this->middleware('role:admin');
     	$this->users = $users;
     }
 
@@ -41,6 +42,20 @@ class UserController extends Controller
             return view('users.update', [
                 'user' => $user
             ]);
+        }else{
+            abort(404);
+        }
+    }
+
+    public function delete(Request $request, $id){
+        if($user = $this->users->forId($id)){
+            if($request->user()->isAdmin()){
+                $user->delete();
+                $request->session()->flash('status', 'El usuario ha sido eliminado');
+                return redirect('/users/');
+            }else{
+                abort(403, 'No autorizado');
+            }
         }else{
             abort(404);
         }

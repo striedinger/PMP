@@ -5,6 +5,10 @@ use Bican\Roles\Models\Role;
 use App\User;
 use App\Area;
 use App\Process;
+use App\Exam;
+use App\Question;
+use App\Session;
+use App\Answer;
 
 class DatabaseSeeder extends Seeder
 {
@@ -15,6 +19,8 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
+        $faker = Faker\Factory::create();
+
     	//Roles
     	DB::table('roles')->delete();
         $adminRole = Role::create([
@@ -52,11 +58,50 @@ class DatabaseSeeder extends Seeder
         Area::create(['name' => 'Gestión de los Interesados']);
 
         //Processes
+        DB::table('processes')->delete();
         Process::create(['name' => 'Inicio']);
         Process::create(['name' => 'Planeación']);
         Process::create(['name' => 'Ejecución']);
         Process::create(['name' => 'Seguimiento y Control']);
         Process::create(['name' => 'Cierre']);
         Process::create(['name' => 'Ética y Responsabilidad']);
+
+        //Exams
+        DB::table('exams')->delete();
+        Exam::create(['name' => 'Examen Aleatorio', 'questions' => 5, 'duration' => 10, 'type' => 'Aleatorio']);
+        Exam::create(['name' => 'Examen por Area', 'questions' => 5, 'duration' => 10, 'type' => 'Area']);
+        Exam::create(['name' => 'Examen por Proceso', 'questions' => 5, 'duration' => 10, 'type' => 'Proceso']);
+
+        //Questions
+        DB::table('questions')->delete();
+        for($i=0;$i<50;$i++){
+            Question::create([
+                'question' => $faker->text, 
+                'description' => $faker->text, 
+                'optionA' => $faker->randomNumber, 
+                'optionB' => $faker->randomNumber, 
+                'optionC' => $faker->randomNumber, 
+                'optionD' => $faker->randomNumber, 
+                'answer' => $faker->randomElement($array = array('A', 'B', 'C', 'D')),
+                 'process_id' => $faker->numberBetween(1, 6), 
+                 'area_id' => $faker->numberBetween(1, 10), 
+                 'active' => true
+                ]);
+        } 
+
+        //Sessions
+        DB::table('sessions')->delete();
+        Session::create(['user_id' => 2, 'exam_id' => 1]); 
+
+        //Answers
+        DB::table('answers')->delete();
+        $n = $faker->numberBetween(1,40);
+        for($i=1;$i<=10;$i++){
+            Answer::create([
+                'session_id' => 1,
+                'question_id' => $n+$i,
+                'number' => $i
+            ]);
+        }     
     }
 }

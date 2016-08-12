@@ -159,6 +159,7 @@ return [
         App\Providers\RouteServiceProvider::class,
         Bican\Roles\RolesServiceProvider::class,
         Collective\Html\HtmlServiceProvider::class,
+        Dingo\Api\Provider\LaravelServiceProvider::class
 
     ],
 
@@ -207,6 +208,8 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
         'Form' => Collective\Html\FormFacade::class,
         'Html' => Collective\Html\HtmlFacade::class,
+        'API' => Dingo\Api\Facade\API::class,
+        'APIRoute' => Dingo\Api\Facade\Route::class
 
     ],
 

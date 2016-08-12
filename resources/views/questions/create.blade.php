@@ -16,7 +16,7 @@ Crear Pregunta
 			Crear Pregunta
 		</div>
 		<div class="panel-body">
-			<form method="post">
+			<form method="post" action>
 				{{ csrf_field() }}
 				<div class="form-group">
 					<label>Pregunta</label>

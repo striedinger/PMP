@@ -11,5 +11,7 @@ class Exam extends Model
 
     protected $dates = ['deleted_at'];
 
-    protected $fillable = ['name', 'description', 'duration', 'questions', 'byArea'];
+    protected $fillable = ['name', 'description', 'duration', 'questions', 'type'];
+
+    
 }

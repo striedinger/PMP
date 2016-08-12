@@ -20,7 +20,7 @@ class CreateQuestionsTable extends Migration
             $table->string('optionB');
             $table->string('optionC');
             $table->string('optionD');
-            $table->string('answer');
+            $table->enum('answer', ['A', 'B', 'C', 'D']);
             $table->integer('process_id')->unsigned();
             $table->integer('area_id')->unsigned();
             $table->boolean('active')->default(true);

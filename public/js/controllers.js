@@ -1,5 +1,5 @@
 angular.module('app.controllers', [])
 
-.controller('TestController', function($scope, $http, Test){
+.controller('SessionController', function($scope, $http, Test){
 	
 });

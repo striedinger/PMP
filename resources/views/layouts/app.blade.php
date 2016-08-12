@@ -25,7 +25,7 @@
         }
     </style>
 </head>
-<body id="app-layout">
+<body>
     <nav class="navbar navbar-default navbar-static-top">
         <div class="container">
             <div class="navbar-header">
@@ -40,7 +40,7 @@
 
                 <!-- Branding Image -->
                 <a class="navbar-brand" href="{{ url('/') }}">
-                    PML Solutions
+                    <img src="{{ URL::asset('img/Logo.png') }}">
                 </a>
             </div>
 
@@ -48,6 +48,11 @@
                 <!-- Left Side Of Navbar -->
                 <ul class="nav navbar-nav">
                     @if(!Auth::guest())
+                        @if(!Auth::user()->isAdmin())
+                        <li><a href="{{ url('/home') }}">Inicio</a></li>
+                        <li><a href="">Resultados</a></li>
+                        @endif
+                        @if(Auth::user()->isAdmin())
                         <li><a href="{{ url('/home') }}">Inicio</a></li>
                         <li class="dropdown">
                             <a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Usuarios <i class="caret"></i></a>
@@ -79,6 +84,7 @@
                                 <li><a href="">Lista de Grupos de Procesos</a></li>
                             </ul>
                         </li>
+                        @endif
                     @endif
                 </ul>
 
