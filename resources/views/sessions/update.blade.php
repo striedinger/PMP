@@ -37,28 +37,34 @@ Examen
 			cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
 			proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
 			<p><small>Seleccione la respuesta que considere es correcta, si está seguro presione CONFIRMAR. Si desea revisarla luego, presione MARCAR</small></p>
-			<div class="question question-success">
+			<div class="question question-info" ng-click="setSelected('A')" ng-class="(selected == 'A') ? 'question-warning' : 'question-info'">
 				<p><strong>A. </strong> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
 				tempor incididunt ut labore et dolore magna aliqua.</p>
 			</div>
-			<div class="question question-info">
+			<div class="question question-info" ng-click="setSelected('B')" ng-class="(selected == 'B') ? 'question-warning' : 'question-info'">
 				<p><strong>B. </strong> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
 				tempor incididunt ut labore et dolore magna aliqua.</p>
 			</div>
-			<div class="question question-danger">
+			<div class="question question-info" ng-click="setSelected('C')" ng-class="(selected == 'C') ? 'question-warning' : 'question-info'">
 				<p><strong>C. </strong> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
 				tempor incididunt ut labore et dolore magna aliqua.</p>
 			</div>
-			<div class="question question-warning">
+			<div class="question question-info" ng-click="setSelected('D')" ng-class="(selected == 'D') ? 'question-warning' : 'question-info'">
 				<p><strong>D. </strong> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
 				tempor incididunt ut labore et dolore magna aliqua.</p>
 			</div>
 			<div class="form-group btn-group btn-group-justified" role="group">
 				<div class="btn-group">
+					<button class="btn btn-primary"><i class="fa fa-arrow-left"></i> Anterior</button>
+				</div>
+				<div class="btn-group">
 					<button class="btn btn-warning"><i class="fa fa-pencil"></i> Marcar</button>
 				</div>
 				<div class="btn-group">
 					<button class="btn btn-success"><i class="fa fa-check"></i> Confirmar</button>
+				</div>
+				<div class="btn-group">
+					<button class="btn btn-primary">Siguiente <i class="fa fa-arrow-right"></i> </button>
 				</div>
 			</div>
 			<div class="well">
