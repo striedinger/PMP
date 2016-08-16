@@ -131,6 +131,9 @@
     <script src="{{ URL::asset('js/app.js') }}"></script>
     <script src="{{ URL::asset('js/controllers.js') }}"></script>
     <script src="{{ URL::asset('js/services.js') }}"></script>
+    <script src="{{ URL::asset('js/directives.js') }}"></script>
+    <script src="{{ URL::asset('js/services.js') }}"></script>
+    <script src="{{ URL::asset('js/config.js') }}"></script>
     <script src="{{ URL::asset('js/angular-time.min.js') }}"></script>
     {{-- <script src="{{ elixir('js/app.js') }}"></script> --}}
 </body>

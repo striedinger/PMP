@@ -8,25 +8,23 @@ angular.module('app.services', [])
 	}
 });*/
 
-  angular
-        .module('app.services',[])
-        .factory('sessions', sessions);
+  angular.module('app.services',[])
+
+  	.factory('sessions', sessions);
 
     /** @ngInject */
-    function sessions($log, $http, Restangular) {
-        var apiHost = 'http://localhost/pmp_hugo/PMP/public/api/sessions/';
+    function sessions($log, $http) {
+        var apiHost = 'http://localhost/pmp_hugo/PMP/public/api/sessions';
         var service = {
             apiHost: apiHost,
-            getAnswers: getAnswers,
-            setAnswers: setAnswers,
-            getAllAnswers: getAllAnswers
+            getSessions: getSessions
         };
 
         return service;
 
 
         function getSessions(id,token) {
-            var new_answers = (JSON.parse(JSON.stringify(answers_structs[type])));
+            var new_answers = {};
             $log.info("obteniendo datos de la session" + id + " del usuario:" + token);
             return $http.get(apiHost +"/" + id + "/questions")
                 .then(getAnswersComplete)
@@ -34,11 +32,11 @@ angular.module('app.services', [])
 
             function getAnswersComplete(response) {
                 $log.info("devolviendo :", response);
-                if (response.status == 200) {
-                    if (typeof(response.data.answers) != "undefined" && response.data.answers != null) {
-                        return getInSessions(new_answers, response.data.answers);
+                if (response.status == 200) { //Respuesta ok
+                    if (typeof(response.data.questions) != "undefined" && response.data.questions != null) {//verificar que envio preguntas
+                        return response.data;
                     } else {
-                        return new_answers; //si no se ha realizado el insturmento
+                        return null //si no se ha realizado el insturmento
                     }
                 }
 
