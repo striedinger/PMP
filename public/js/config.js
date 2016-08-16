@@ -4,6 +4,7 @@ angular.module('app.config', []).config(config);
   function config($logProvider) {
     // Enable log
     $logProvider.debugEnabled(true);  
+    
      
   }
 

@@ -134,7 +134,10 @@
     <script src="{{ URL::asset('js/directives.js') }}"></script>
     <script src="{{ URL::asset('js/services.js') }}"></script>
     <script src="{{ URL::asset('js/config.js') }}"></script>
+   <!-- <script src="{{ URL::asset('js/routes.js') }}"></script>-->
     <script src="{{ URL::asset('js/angular-time.min.js') }}"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.3.1/angular-ui-router.min.js"></script>
     {{-- <script src="{{ elixir('js/app.js') }}"></script> --}}
 </body>
 </html>

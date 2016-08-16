@@ -5,6 +5,7 @@ Examen
 @endsection
 
 @section('content')
+
 <div class="container" ng-controller="SessionController">
 	<div class="row">
 		<div class="col-xs-12 col-sm-4">

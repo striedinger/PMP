@@ -3,5 +3,6 @@ var app = angular.module('app',
 		'app.services',  
 		'app.directives',
 		'app.config',
+		'ui.router',
 		'timer']); 
 

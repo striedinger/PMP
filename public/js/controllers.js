@@ -1,6 +1,8 @@
 angular.module('app.controllers', [])
 
 .controller('SessionController', function($scope, $http, sessions, $log){
+	var pathname = window.location.href;
+	var session_id = pathname.split("/").pop(-1)
 	$scope.data = {};
 	$scope.questions = {};
 	$scope.qTotal = 0;
@@ -8,7 +10,7 @@ angular.module('app.controllers', [])
 	$scope.qCurrent = {};
 	$scope.qMarked = {};
 
-	sessions.getSessions(1, "token").then(function(data) {
+	sessions.getSessions(session_id, "token").then(function(data) { //TODO: obtener el id de la seccion
             //$scope.answers = data;
             if (!$.isEmptyObject(data) && data !== null && typeof(data) != "undefined") {
                 $scope.data = data;
