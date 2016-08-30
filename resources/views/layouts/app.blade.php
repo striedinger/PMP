@@ -12,9 +12,13 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:100,300,400,700">
 
     <!-- Styles -->
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
     {{-- <link href="{{ elixir('css/app.css') }}" rel="stylesheet"> --}}
     <link rel="stylesheet" type="text/css" href="{{ URL::asset('css/app.css') }}">
+     <link rel="stylesheet" type="text/css" href="{{ URL::asset('css/animate.min.css') }}">
+     <link rel="stylesheet" type="text/css" href="{{ URL::asset('css/loading-bar.min.css') }}">
+
     <style>
         body {
             font-family: 'Lato';
@@ -126,16 +130,23 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.3/jquery.min.js" integrity="sha384-I6F5OKECLVtK/BL+8iSLDEHowSAfUo76ZL9+kGAgTRdiByINKJaqTPH/QVNS1VDb" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular.min.js"></script>
+    <script src="{{ URL::asset('js/ui-boostrap/ui-bootstrap-custom-2.1.2.min.js') }}"></script>
+    <script src="{{ URL::asset('js/ui-boostrap/ui-bootstrap-custom-tpls-2.1.2.min.js') }}"></script>
     <script src="{{ URL::asset('js/moment.min.js') }}"></script>
     <script src="{{ URL::asset('js/humanize-duration.js') }}"></script>
     <script src="{{ URL::asset('js/app.js') }}"></script>
     <script src="{{ URL::asset('js/controllers.js') }}"></script>
     <script src="{{ URL::asset('js/services.js') }}"></script>
+    <script src="{{ URL::asset('js/filters.js') }}"></script>
     <script src="{{ URL::asset('js/directives.js') }}"></script>
-    <script src="{{ URL::asset('js/services.js') }}"></script>
     <script src="{{ URL::asset('js/config.js') }}"></script>
    <!-- <script src="{{ URL::asset('js/routes.js') }}"></script>-->
     <script src="{{ URL::asset('js/angular-time.min.js') }}"></script>
+    <script src="{{ URL::asset('js/loading-bar.min.js') }}"></script>
+    <script src="{{ URL::asset('bower_components/spin.js/spin.js') }}"></script>
+    <script src="{{ URL::asset('bower_components/angular-spinner/angular-spinner.js') }}"></script>
+    
+
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.3.1/angular-ui-router.min.js"></script>
     {{-- <script src="{{ elixir('js/app.js') }}"></script> --}}
