@@ -1,5 +1,6 @@
 angular.module('app.controllers', [])
 
+ 
 .controller('SessionController', function($scope, $http, sessions, $log){
 	var pathname = window.location.href;
 	var session_id = pathname.split("/").pop(-1)
@@ -40,4 +41,5 @@ angular.module('app.controllers', [])
     }
 
 	
+ 
 });

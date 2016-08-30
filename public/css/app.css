@@ -55,6 +55,9 @@
 .question-warning>strong {
     color: #FEAF20;
 }
+.question-warning>p{
+  font-weight:bold;
+}
 .question-danger {
     border-color: #d73814;
 }

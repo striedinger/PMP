@@ -30,9 +30,11 @@ Examen
 				</div>
 			</div>
 		</div>
+ 
 		
 		<question  question="pmp.qCurrent"  ng-if="pmp.dataHasLoaded"  > </question>
 		 
+ 
 	</div>
 </div>
 @endsection
