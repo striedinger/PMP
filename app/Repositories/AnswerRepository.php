@@ -17,6 +17,10 @@ class AnswerRepository{
 		return Answer::where(['session_id' => $id])->get();
 	}
 
+	public function forSessionAnswered($id){
+		return Answer::where(['session_id' => $id])->whereNotNull('answer')->get();
+	}
+
 	public function forSessionMarked($id){
 		return Answer::where(['session_id' => $id, 'marked' => true])->get();
 	}

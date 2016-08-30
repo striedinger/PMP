@@ -35,12 +35,15 @@ class UserController extends Controller
                 $user->name = $request->name;
                 $user->email = $request->email;
                 $user->phone = $request->phone;
+                $user->expiration = $request->expiration;
                 $user->save();
                 $request->session()->flash('status', 'El usuario ha sido actualizado');
                 return redirect('/users/update/' . $user->id);
             }
+            $plans = \App\Plan::lists('name', 'id');
             return view('users.update', [
-                'user' => $user
+                'user' => $user,
+                'plans' => $plans
             ]);
         }else{
             abort(404);
