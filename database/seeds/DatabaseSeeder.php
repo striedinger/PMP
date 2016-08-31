@@ -9,6 +9,8 @@ use App\Exam;
 use App\Question;
 use App\Session;
 use App\Answer;
+use App\Plan;
+use App\Transaction;
 
 class DatabaseSeeder extends Seeder
 {
@@ -66,11 +68,17 @@ class DatabaseSeeder extends Seeder
         Process::create(['name' => 'Cierre']);
         Process::create(['name' => 'Ética y Responsabilidad']);
 
+        //Plans
+        DB::table('plans')->delete();
+        Plan::create(['name' => '30 Días', 'duration' => 30, 'price' => "15000", 'active' => true]);
+        Plan::create(['name' => '60 Días', 'duration' => 60, 'price' => "30000", 'active' => true]);
+        Plan::create(['name' => '90 Días', 'duration' => 90, 'price' => "60000", 'active' => true]);
+
         //Exams
         DB::table('exams')->delete();
-        Exam::create(['name' => 'Examen Aleatorio', 'questions' => 5, 'duration' => 10, 'type' => 'Aleatorio']);
-        Exam::create(['name' => 'Examen por Area', 'questions' => 5, 'duration' => 10, 'type' => 'Area']);
-        Exam::create(['name' => 'Examen por Proceso', 'questions' => 5, 'duration' => 10, 'type' => 'Proceso']);
+        Exam::create(['name' => 'Examen Aleatorio', 'questions' => 10, 'duration' => 10, 'type' => 'Aleatorio']);
+        Exam::create(['name' => 'Examen por Area', 'questions' => 10, 'duration' => 10, 'type' => 'Area']);
+        Exam::create(['name' => 'Examen por Proceso', 'questions' => 10, 'duration' => 10, 'type' => 'Proceso']);
 
         //Questions
         DB::table('questions')->delete();

@@ -16,6 +16,7 @@ class CreateSessionsTable extends Migration
             $table->increments('id');
             $table->integer('user_id')->unsigned();
             $table->integer('exam_id')->unsigned();
+            $table->string('name');
             $table->boolean('active')->default(true);
             $table->integer('time')->default(0);
             $table->timestamps();

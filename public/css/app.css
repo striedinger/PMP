@@ -8,6 +8,41 @@
   width: auto;
 }
 
+.has-padding{
+  padding:30px !important;
+}
+
+.list-inline li{
+  padding-right:1px;
+  padding-left:1px;
+}
+
+.truncate{
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+#circle {
+    width: 100%;
+    height:auto;
+    margin: 20px;
+    display: inline-block;
+    position: relative;
+    text-align: center;
+    line-height: 1.2;
+}
+
+#circle strong {
+    position: absolute;
+    top: 30px;
+    left: 0;
+    width: 100%;
+    text-align: center;
+    line-height: 40px;
+    font-size: 30px;
+}
+
 /* Questions */
 .question {
     padding: 15px;
@@ -54,6 +89,9 @@
 }
 .question-warning>strong {
     color: #FEAF20;
+}
+.question-warning>p{
+  font-weight:bold;
 }
 .question-danger {
     border-color: #d73814;

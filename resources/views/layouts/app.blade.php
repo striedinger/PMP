@@ -13,6 +13,7 @@
 
     <!-- Styles -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="{{ URL::asset('css/bootstrap-datetimepicker.min.css') }}">
     {{-- <link href="{{ elixir('css/app.css') }}" rel="stylesheet"> --}}
     <link rel="stylesheet" type="text/css" href="{{ URL::asset('css/app.css') }}">
     <style>
@@ -50,7 +51,7 @@
                     @if(!Auth::guest())
                         @if(!Auth::user()->isAdmin())
                         <li><a href="{{ url('/home') }}">Inicio</a></li>
-                        <li><a href="">Resultados</a></li>
+                        <li><a href="{{ url('/results') }}">Resultados</a></li>
                         @endif
                         @if(Auth::user()->isAdmin())
                         <li><a href="{{ url('/home') }}">Inicio</a></li>
@@ -74,7 +75,7 @@
                                 <li><a href="{{ url('/questions') }}">Ver Preguntas</a></li>
                             </ul>
                         </li>
-                        <li><a href="">Resultados</a></li>
+                        <li><a href="{{ url('/results') }}">Resultados</a></li>
                         <li><a href="">Transacciones</a></li>
                         <li class="dropdown">
                             <a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Configuración <i class="caret"></i></a>
@@ -136,8 +137,14 @@
     <script src="{{ URL::asset('js/config.js') }}"></script>
    <!-- <script src="{{ URL::asset('js/routes.js') }}"></script>-->
     <script src="{{ URL::asset('js/angular-time.min.js') }}"></script>
+ 
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.3.1/angular-ui-router.min.js"></script>
+ 
+    <script src="{{ URL::asset('js/circle-progress.js') }}"></script>
+    <script src="{{ URL::asset('js/bootstrap-datetimepicker.min.js') }}"></script>
+ 
     {{-- <script src="{{ elixir('js/app.js') }}"></script> --}}
+    @yield('scripts')
 </body>
 </html>

@@ -29,8 +29,10 @@ Examen
 				</div>
 			</div>
 		</div>
+ 
 		<question question="qCurrent"> </question>
 		 
+ 
 	</div>
 </div>
 @endsection

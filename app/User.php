@@ -36,4 +36,12 @@ class User extends Authenticatable implements HasRoleAndPermissionContract
     public function sessions(){
         return $this->hasMany(Session::class);
     }
+
+    public function transactions(){
+        return $this->hasMany(Transaction::class);
+    }
+
+    public function adminTransactions(){
+        return $this->hasMany(Transaction::class, 'admin_id');
+    }
 }

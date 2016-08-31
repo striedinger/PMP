@@ -21,6 +21,33 @@ class ApiController extends Controller
 		$this->answers = $answers;
 	}
 
+    public function startSession(Request $request, $id){
+        if($session = $this->session->forId($id)){
+            $session->active = true;
+            $session->save();
+            return response()->json(['success'=>true, 'session'=>$session]);
+        }else{
+            throw new \Symfony\Component\HttpKernel\Exception\NotFoundHttpException('No se encontro la sesion');
+        }
+    }
+
+    public function endSession(Request $request, $id){
+        if($session = $this->session->forId($id)){
+            if(isset($request->answer) && isset($request->option) && in_array($request->option, array("A", "B", "C", "D"))){
+                if($answer = $this->answers->forId($request->answer)){
+                    $answer->answer = $request->option;
+                    $answer->save();
+                }else{
+                    throw new \Symfony\Component\HttpKernel\Exception\NotFoundHttpException('No se encontro la respuesta a guardar');
+                }
+            }
+            $session->active = false;
+            $session->save();
+        }else{
+            throw new \Symfony\Component\HttpKernel\Exception\NotFoundHttpException('No se encontro la sesion');
+        }
+    }
+
     public function questions(Request $request, $id){
     	if($session = $this->session->forId($id)){
     		$answers = $this->answers->forSession($session->id);

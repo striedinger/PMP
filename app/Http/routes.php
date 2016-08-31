@@ -11,13 +11,13 @@
 |
 */
 
-app('Dingo\Api\Transformer\Factory')->register('Answer', 'AnswerTransformer');
-
 $api = app('Dingo\Api\Routing\Router');
 
 $api->version('v1', function ($api) {
 	$api->get('/sessions/{id}/questions', 'App\Http\Controllers\ApiController@questions');
 	$api->post('/sessions/{id}', 'App\Http\Controllers\ApiController@saveAnswer');
+	$api->post('/sessions/{id}/start', 'App\Http\Controllers\ApiController@startSession');
+	$api->post('/sessions/{id}/end', 'App\Http\Controllers\ApiController@endSession');
 });
 
 Route::get('/', function () {
@@ -72,8 +72,14 @@ Route::get('/sessions/{id}', function(){
 	return view('sessions.update');
 });
 
-Route::get('/test', function(){
-	return App\Question::all()->toJSON();
-});
+//Results
+
+Route::get('/results', 'ResultController@index');
+
+Route::get('/results/{id}', 'ResultController@view');
+
+//Transactions
+
+Route::post('/transactions/create/{id}', 'TransactionController@create');
 
 

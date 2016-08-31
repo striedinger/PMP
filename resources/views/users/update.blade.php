@@ -46,11 +46,72 @@ Editar Usuario
                     @endif
 				</div>
 				<div class="form-group">
+						<label>Fecha de Expiración</label>
+						<div class='input-group date' id='datetimepicker1'>
+                    		<input type='text' class="form-control" name="expiration" value="{{ $user->expiration }}"/>
+                    		<span class="input-group-addon">
+                        		<span class="glyphicon glyphicon-calendar"></span>
+                    		</span>
+                		</div>
+					</div>
+				<div class="form-group">
 					<button type="submit" class="btn btn-primary btn-block"><i class="fa fa-refresh"></i> Actualizar Usuario</button>
 				</div>
 			</form>
 		</div>
 	</div>
 	
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			Transacciones
+		</div>
+		<div class="panel-body">
+			{!! Form::open(['action' => array('TransactionController@create', $user->id, 'method' => 'post')]) !!}
+			<div class="form-group">
+				<label>Agregar Plan</label>
+				<div class="input-group">
+					{{ Form::select('plan_id', $plans, null, ['class' => 'form-control']) }}
+					<div class="input-group-btn">
+						<button class="btn btn-primary" type="submit">Agregar</button>
+					</div>
+				</div>
+			</div>
+			{!! Form::close() !!}
+			@if(count($user->transactions)==0)
+			<p class="text-center">El usuario no tiene transacciones</p>
+			@else 
+			<div class="table-responsive">
+				<table class="table table-bordered table-hover">
+					<thead>
+						<th>#</th>
+						<th>Plan</th>
+						<th>Días</th>
+						<th>Fecha</th>
+					</thead>
+					<tbody>
+						@foreach($user->transactions as $transaction)
+						<tr>
+							<td>{{ $transaction->id }}</td>
+							<td>{{ $transaction->plan->name }}</td>
+							<td>{{ $transaction->plan->duration }} días</td>
+							<td>{{ $transaction->created_at }}</td>
+						</tr>
+						@endforeach
+					</tbody>
+				</table>
+			</div>
+			@endif
+		</div>
+	</div>
 </div>
+@endsection
+
+@section('scripts')
+<script type="text/javascript">
+$(function () {
+    $('#datetimepicker1').datetimepicker({
+        'format' : 'YYYY-MM-DD'
+    });
+});
+</script>
 @endsection
