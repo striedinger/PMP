@@ -196,7 +196,7 @@
                 vm.spinner = true;
                 sessions.save(vm.question, "token").then(function(data) { 
                         if (!$.isEmptyObject(data) && data !== null && typeof(data) != "undefined") {
-                            vm.question = data;
+                            vm.question = data.answer;
                             steps_question(1); //cargar siguiente pregunta
                            
                         }else{
