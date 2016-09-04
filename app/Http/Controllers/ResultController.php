@@ -40,7 +40,37 @@ class ResultController extends Controller
             $wrong = $answers->reject(function($answer){
                 return $answer->answer == $answer->question->answer;
             });
-    		return view('results.view', ['session' => $session, 'correct' => $correct, 'wrong' => $wrong]);
+            $areas = \App\Area::all();
+            $processes = \App\Process::all();
+            $area_result = array();
+            $area_total = array();
+            foreach($areas as $area){
+                //Total de preguntas por area
+                $area_all = $answers->reject(function($answer) use ($area){
+                    return $answer->question->area_id != $area->id;
+                });
+                array_push($area_total, count($area_all));
+                //Total de preguntas correctas por area
+                $area_correct = $area_all->reject(function($answer) use ($area){
+                    return $answer->answer != $answer->question->answer;
+                });
+                array_push($area_result, count($area_correct));
+            }
+            $process_result = array();
+            $process_total = array();
+            foreach($processes as $process){
+                //Total de preguntas por proceso
+                $process_all = $answers->reject(function($answer) use ($process){
+                    return $answer->question->process_id != $process->id;
+                });
+                array_push($process_total, count($process_all));
+                //Total de preguntas correctas por proceso
+                $process_correct = $process_all->reject(function($answer) use ($process){
+                    return $answer->answer != $answer->question->answer;
+                });
+                array_push($process_result, count($process_correct));
+            }
+    		return view('results.view', ['session' => $session, 'areas' => $areas, 'processes' => $processes,'correct' => $correct, 'wrong' => $wrong, 'area_total' => $area_total, 'area_result' => $area_result, 'process_total' => $process_total, 'process_result' => $process_result]);
     	}else{
     		abort(404);
     	}
