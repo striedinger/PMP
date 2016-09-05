@@ -45,6 +45,10 @@ angular.module('app.controllers', [])
         $scope.pmp.duration = $scope.pmp.data.session.exam.duration*60;
         $scope.pmp.qIndex = 1;
         $scope.$broadcast('timer-set-countdown-seconds', $scope.pmp.duration);
+        if($scope.pmp.data.session.active != 1){
+             $scope.stopTimer();
+               $scope.timerRunning = false;
+        }
     }
 
     $scope.changeQuestion =function (number) {

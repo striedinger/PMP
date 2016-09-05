@@ -57,19 +57,22 @@ class ApiController extends Controller
         if($session = $this->session->forId($id)){
             if(isset($request->answer) && isset($request->option) && in_array($request->option, array("A", "B", "C", "D"))){
                 if($answer = $this->answers->forId($request->answer)){
-                    //if(!isset($answer->answer)){
+
+                    if(!isset($answer->answer) || $answer->marked == true){
                         $answer->answer = $request->option;
                         if($request->marked){
                             $answer->marked = true;
+                        }else{
+                            $answer->marked = false;
                         }
                         if($answer->save()){
                             return response()->json(['success' => true, 'answer' => $answer]);
                         }else{
                             return response()->json(['success' => false, 'message' => 'Error guardando']);
                         }
-                    //}else{
+    
                         return response()->json(['success'=>false, 'message' => 'Pregunta ya habia sido respondida']);
-                   // }
+              
                 }else{
                     throw new \Symfony\Component\HttpKernel\Exception\NotFoundHttpException('No se encontro la pregunta');                    
                 }

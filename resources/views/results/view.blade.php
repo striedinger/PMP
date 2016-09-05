@@ -29,17 +29,24 @@ Ver Resultado
 					</ul>
 					<div class="tab-content" style="margin-top:20px">
 						<div class="tab-pane active" id="areas">
-							<strong>Area 1</strong><span class="pull-right">40%</span>
+							@foreach($areas as $area)
+							@if($area_total[$area->id -1]>0)
+							<strong>{{ $area->name }}</strong><span class="pull-right">{{ ($area_result[$area->id - 1])/($area_total[$area->id - 1]) * 100  }}%</span>
 							<div class="progress">
-								<div class="progress-bar progress-bar-danger progress-bar-striped active" style="width: 40%;"></div>
+								<div class="progress-bar progress-bar-striped active {{ (($area_result[$area->id - 1])/($area_total[$area->id - 1]) * 100 > 70) ? 'progress-bar-success' : 'progress-bar-danger' }}" style="width: {{ ($area_result[$area->id - 1])/($area_total[$area->id - 1]) * 100  }}%;"></div>
 							</div>
-							<strong>Area 2</strong><span class="pull-right">70%</span>
-							<div class="progress">
-								<div class="progress-bar progress-bar-success progress-bar-striped active" style="width: 70%;"></div>
-							</div>
+							@endif
+							@endforeach
 						</div>
 						<div class="tab-pane" id="processes">
-							Hello world
+							@foreach($processes as $process)
+							@if($process_total[$process->id -1]>0)
+							<strong>{{ $process->name }}</strong><span class="pull-right">{{ ($process_result[$process->id - 1])/($process_total[$process->id - 1]) * 100  }}%</span>
+							<div class="progress">
+								<div class="progress-bar progress-bar-striped active {{ (($process_result[$process->id - 1])/($process_total[$process->id - 1]) * 100 > 70) ? 'progress-bar-success' : 'progress-bar-danger' }}" style="width: {{ ($process_result[$process->id - 1])/($process_total[$process->id - 1]) * 100  }}%;"></div>
+							</div>
+							@endif
+							@endforeach
 						</div>
 					</div>
 				</div>
