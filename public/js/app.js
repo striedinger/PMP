@@ -1,5 +1,7 @@
 var app = angular.module('app', 
-	[	'app.controllers',
+	[
+	    '19degrees.ngSweetAlert2',	
+		'app.controllers',
 		'ui.bootstrap',
 		'app.services',  
 		'app.directives',
@@ -7,7 +9,8 @@ var app = angular.module('app',
 		'ui.router',
 		'timer',
 		'angular-loading-bar',
-		'angularSpinner']); 
+		'angularSpinner'
+		]); 
 
 $.fn.extend({
     animateCss: function (animationName) {

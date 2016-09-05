@@ -11,12 +11,22 @@ Examen
 		<div class="col-xs-12 col-sm-4">
 			<div class="panel panel-default">
 				<div class="panel-heading">
-					Examen
+					<div class="col-xs-8">
+						Examen
+					</div>
+					<div class="stop-timer">
+							<div class="btn-group">
+								<button class="btn btn-warning " ng-click="stopTimer()" ng-show="timerRunning"><i class="fa fa-pencil"></i> Parar</button>
+							</div>
+							<div class="btn-group">
+								<button class="btn btn-warning " ng-click="startTimer()" ng-show="!timerRunning"><i class="fa fa-pencil"></i> Continuar</button>
+							</div>
+					</div>
 				</div>
 				<div class="panel-body">
 					<uib-progressbar max="pmp.qTotal" value="pmp.qTotalAnswered"><span style="color:white; white-space:nowrap;">@{{pmp.qTotalAnswered}} / @{{pmp.qTotal}}</span></uib-progressbar>
 					<p>Pregunta @{{pmp.qIndex}} de @{{pmp.qTotal}}</p>
-					<p>Tiempo dedicado: <timer interval="1000" countdown="100">@{{hhours}}:@{{mminutes}}:@{{sseconds}}</timer></p>
+					<p>Tiempo dedicado: <timer interval="1000" countdown="1000">@{{hhours}}:@{{mminutes}}:@{{sseconds}}</timer></p>
 					<p><a href="">Ver resultados</a></p>
 					<p>
 						<a href="#marked" role="button" data-toggle="collapse" aria-expanded="false" aria-controls="marked">Preguntas marcadas <span class="badge">@{{pmp.marked.size()}}</span></a>

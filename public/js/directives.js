@@ -76,7 +76,7 @@
             }
             vm.next = function() { //Maneja siguiente, confirmar y finalizar
                 //local_answer maneja respuestas locales, answer maneja respuesta final para serividor
-                if (vm.question.number < vm.qTotal) {
+                if (vm.question.number <= vm.qTotal) {
                     //Para dar siguiente se debe cumplir dos condiciones: que este marcada, o que este seleccionada al menos una respuesta En otro caso no avanzar
                     if (vm.question.marked == 1 || vm.question.local_answer != null ) { //Se ha seleccionado una pregunta o marcado
                         //Guardar y cargar siguiente pregunta.
@@ -85,15 +85,19 @@
                             vm.question.answer = vm.question.local_answer;
                         }
                         vm.question.marked = 0;
-      
-                        //TODO: Guardar en db
                         save_question();
                      
                     } else {
                         //Verificar si ya tiene una respuesta precargada o de pasos anteriores, en ese caso siguiente.
                         if (vm.question.answer == null) {
                             alert("No ha seleccionado una respuesta.");
+                        }else{
+                            if (vm.question.number != vm.qTotal) {
+                                steps_question(1);
+                            }
                         }
+
+
                     }
                     $('#question').animateCss('fadeIn');
                    
@@ -107,18 +111,11 @@
                 
                 //Si es la ultima pregunta
                 if (vm.question.number == vm.qTotal) {
-                    //Guardar y cargar siguiente pregunta.
-                    vm.question.time = new Date();
-                    vm.question.answer = vm.question.local_answer;
-                    vm.question.marked = 0;
-
-                    //TODO: Guardar en db
-                      save_question();
-
                     if ($scope.$parent.pmp.qMarked.length > 0) {
-                        alert("aun tiene preguntas marcadas");
+                        swal("aun tiene preguntas marcadas");
+                        
                     } else {
-                        alert("TODO:redireccionado a resultados"); //Ultima pregunta
+                        swal("TODO:redireccionado a resultados"); //Ultima pregunta
                     }
                 }
 
@@ -128,24 +125,14 @@
 
             vm.marcar = function () {
             	//Marcar si no esta confirmada
-            	if(vm.question.number < vm.qTotal ){
-            		$scope.$parent.pmp.qMarked.push(vm.question);
-                    vm.question.time = new Date();
-                    vm.question.answer = vm.question.local_answer;
+            	if(vm.question.number <= vm.qTotal ){
+                    if(vm.question.local_answer != null){//si se ha elejido alguna otra opcion.
+                        vm.question.answer = vm.question.local_answer;
+                    }
                     vm.question.marked = 1;
-                    
-                    
-                   //TODO: Guardar en db
-                      save_question();
-            	//}else{
-            	//	alert("esta pregunta ya fue marcada.")
-            	}else{
-                    $scope.$parent.pmp.qMarked.push(vm.question);
-                    vm.question.time = new Date();
-                    vm.question.answer = vm.question.local_answer;
-                    vm.question.marked = 1;
-                    
-                }
+                    save_question();
+
+            	}
 
             }
 
@@ -192,21 +179,42 @@
 
             }
 
-            var save_question = function () {
+            var save_question = function() {
                 vm.spinner = true;
-                sessions.save(vm.question, "token").then(function(data) { 
-                        if (!$.isEmptyObject(data) && data !== null && typeof(data) != "undefined") {
+                vm.question.time = new Date();
+                sessions.save(vm.question, "token").then(function(data) {
+                    if(!$.isEmptyObject(data) && data !== null && typeof(data) != "undefined") {
+                        if (data.answer != null) {
                             vm.question = data.answer;
-                            steps_question(1); //cargar siguiente pregunta
+                             if (vm.question.number < vm.qTotal) {
+                                 steps_question(1); //cargar siguiente pregunta
+                             }
+                        } else {
+                            swal(data.message);
                            
-                        }else{
-                           //ya habia sido respondida
                         }
-                        $log.debug("recibido en sessions controller: " ,vm.question);      
-                        vm.spinner = false;
 
+                    } else {
+                      swal("pregunta habia sido respondida");
+                    
+                    }
+                    $log.debug("recibido en sessions controller: ", vm.question);
+
+                    //actualizar si esta marcada.
+                    if (vm.question.marked == 1) {
+                        //colocar en lista de marcados si esta marcada
+                        var qIndex = $scope.$parent.pmp.qMarked.indexOf(vm.question);
+                        if (qIndex == -1) {
+                            $scope.$parent.pmp.qMarked.push(vm.question);
+                        }
+                    } else {
+                        //swal("error");
+                    };
+
+                    vm.spinner = false;
                 });
             }
+
 
 
         }

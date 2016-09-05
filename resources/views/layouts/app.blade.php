@@ -17,9 +17,9 @@
     <link rel="stylesheet" type="text/css" href="{{ URL::asset('css/bootstrap-datetimepicker.min.css') }}">
     {{-- <link href="{{ elixir('css/app.css') }}" rel="stylesheet"> --}}
     <link rel="stylesheet" type="text/css" href="{{ URL::asset('css/app.css') }}">
-     <link rel="stylesheet" type="text/css" href="{{ URL::asset('css/animate.min.css') }}">
-     <link rel="stylesheet" type="text/css" href="{{ URL::asset('css/loading-bar.min.css') }}">
-
+    <link rel="stylesheet" type="text/css" href="{{ URL::asset('css/animate.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ URL::asset('css/loading-bar.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ URL::asset('bower_components/sweetalert2/dist/sweetalert2.css') }}"></link>
     <style>
         body {
             font-family: 'Lato';
@@ -147,8 +147,9 @@
     <script src="{{ URL::asset('js/loading-bar.min.js') }}"></script>
     <script src="{{ URL::asset('bower_components/spin.js/spin.js') }}"></script>
     <script src="{{ URL::asset('bower_components/angular-spinner/angular-spinner.js') }}"></script>
+    <script src="{{ URL::asset('bower_components/angular-sweetalert-2/SweetAlert.js') }}"></script>
+    <script src="{{ URL::asset('bower_components/sweetalert2/dist/sweetalert2.min.js') }}"></script>
     
- 
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.3.1/angular-ui-router.min.js"></script>
  

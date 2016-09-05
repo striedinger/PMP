@@ -53,18 +53,18 @@ angular.module('app.services', [])
         }
 
         function save(question, token) {
-            var new_answers = {};
-            question.option =  question.answer;
-            question.answer =  question.id;
-            $log.info("obteniendo datos de la session" + question.session_id + " del usuario:" + token);
-            return $http.post(apiHost +"/sessions/" + question.session_id, question, config)
+            var new_answers = jQuery.extend(true, {}, question);
+            new_answers.option =  new_answers.answer;
+            new_answers.answer =  new_answers.id;
+            $log.info("obteniendo datos de la session" + new_answers.session_id + " del usuario:" + token);
+            return $http.post(apiHost +"/sessions/" + new_answers.session_id, new_answers, config)
                 .then(getAnswersComplete)
                 .catch(getAnswersFailed);
 
             function getAnswersComplete(response) {
                 $log.info("devolviendo :", response);
                 if (response.status == 200) { //Respuesta ok
-                    if (typeof(response.data.questions) != "undefined" && response.data.questions != null) {//verificar que envio preguntas
+                    if (typeof(response.data) != "undefined" && response.data != null) {//verificar que envio preguntas
                         return response.data;
                     } else {
                         return null //si no se ha realizado el insturmento
