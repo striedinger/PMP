@@ -24,6 +24,9 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $exams = \App\Exam::all();
+        return view('home', [
+            'exams' => $exams
+        ]);
     }
 }
