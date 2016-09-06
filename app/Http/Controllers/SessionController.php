@@ -9,7 +9,7 @@ use App\Http\Requests;
 use App\Repositories\ExamRepository;
 
 use App\Repositories\SessionRepository;
-
+date_default_timezone_set('America/Bogota');
 class SessionController extends Controller
 {
 
