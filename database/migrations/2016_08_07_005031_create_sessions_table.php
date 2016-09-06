@@ -16,6 +16,8 @@ class CreateSessionsTable extends Migration
             $table->increments('id');
             $table->integer('user_id')->unsigned();
             $table->integer('exam_id')->unsigned();
+            $table->integer('area_id')->unsigned()->nullable();
+            $table->integer('process_id')->unsigned()->nullable();
             $table->string('name');
             $table->boolean('active')->default(true);
             $table->integer('time')->default(0);
@@ -24,6 +26,8 @@ class CreateSessionsTable extends Migration
 
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('exam_id')->references('id')->on('exams')->onDelete('cascade');
+            $table->foreign('area_id')->references('id')->on('areas')->onDelete('cascade');
+            $table->foreign('process_id')->references('id')->on('processes')->onDelete('cascade');
         });
     }
 

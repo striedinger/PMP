@@ -36,7 +36,21 @@ Inicio
                     <p><strong>Tipo de Examen: </strong>{{ $exam->type }}</p>
                     <p><strong>Numero de Preguntas: </strong> {{ $exam->questions }}</p>
                     <p><strong>Duracíon: </strong>{{ ($exam->duration!=0)? $exam->duration : 'Ilimitada' }}</p>
-                    <a href="{{ url('/sessions/create') . '/' . $exam->id }}" class="btn btn-primary btn-block"><i class="fa fa-play"></i> Iniciar</a>
+                    {!! Form::open(['action' => array('SessionController@create', $exam->id), 'method' => 'get']) !!}
+                    @if($exam->type=='Area')
+                    <div class="form-group">
+                        <label>Area:</label>
+                        {{ Form::select('area_id', $areas, null, ['class' => 'form-control']) }}
+                    </div>
+                    @endif
+                    @if($exam->type=='Proceso')
+                    <div class="form-group">
+                        <label>Proceso:</label>
+                        {{ Form::select('process_id', $processes, null, ['class' => 'form-control']) }}
+                    </div>
+                    @endif
+                    <button class="btn btn-primary btn-block"><i class="fa fa-play"></i> Iniciar</button>
+                    {!! Form::close() !!}
                 </div>
             </div>
         </div>

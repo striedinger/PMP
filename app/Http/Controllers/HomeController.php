@@ -25,8 +25,12 @@ class HomeController extends Controller
     public function index()
     {
         $exams = \App\Exam::all();
+        $areas = \App\Area::lists('name', 'id');
+        $processes = \App\Process::lists('name', 'id');
         return view('home', [
-            'exams' => $exams
+            'exams' => $exams,
+            'areas' => $areas,
+            'processes' => $processes
         ]);
     }
 }

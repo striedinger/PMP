@@ -11,7 +11,7 @@ class Session extends Model
 
     protected $dates = ['deleted_at'];
 
-    protected $fillable = ['user_id', 'exam_id', 'tries'];
+    protected $fillable = ['user_id', 'exam_id', 'time', 'area_id', 'process_id'];
 
     protected $with = ['exam'];
 
@@ -25,5 +25,13 @@ class Session extends Model
 
     public function user(){
         return $this->belongsTo(User::class);
+    }
+
+    public function area(){
+        return $this->belongsTo(Area::class);
+    }
+
+    public function process(){
+        return $this->belongsTo(Process::class);
     }
 }
