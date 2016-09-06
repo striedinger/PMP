@@ -68,9 +68,9 @@ Route::delete('/questions/delete/{id}', 'QuestionController@delete');
 
 //Sessions
 
-Route::get('/sessions/{id}', function(){
-	return view('sessions.update');
-});
+Route::get('/sessions/{id}', 'SessionController@update');
+
+Route::get('/sessions/create/{id}', 'SessionController@create');
 
 //Results
 
