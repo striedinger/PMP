@@ -26,7 +26,7 @@
 
         }
         /** @ngInject */
-        function questionsController($timeout, $scope, $log, sessions) {
+        function questionsController($timeout, $scope, $log, sessions, $filter) {
             var vm = this;
             vm.animation  = "animated fadeIn";
             vm.question.class = "";
@@ -103,19 +103,21 @@
                    
                 }
                 //Si esta marcada, actualizar la lista de marcados
-                var qDeleteIndex = $scope.$parent.pmp.qMarked.indexOf(vm.question);
-                if (qDeleteIndex != -1) {
-                    $scope.$parent.pmp.qMarked.splice(qDeleteIndex, 1);
+                var qIndex = $filter('getById')($scope.$parent.pmp.qMarked, vm.question.id);
+                if (qIndex != null) {
+                    $scope.$parent.pmp.qMarked.splice(qIndex, 1);
                 }
                 vm.question.marked = 0;
                 
                 //Si es la ultima pregunta
                 if (vm.question.number == vm.qTotal) {
                     if ($scope.$parent.pmp.qMarked.length > 0) {
-                        swal("aun tiene preguntas marcadas");
+                        swal("Aún tiene preguntas marcadas, por favor confirmelas");
                         
                     } else {
-                        swal("TODO:redireccionado a resultados"); //Ultima pregunta
+
+                        swal("Redireccionado a resultados"); //Ultima pregunta
+                        window.location.replace("http://localhost/pmp_hugo/PMP/public/results"); //CAMBIAR
                     }
                 }
 
@@ -203,8 +205,9 @@
                     //actualizar si esta marcada.
                     if (vm.question.marked == 1) {
                         //colocar en lista de marcados si esta marcada
-                        var qIndex = $scope.$parent.pmp.qMarked.indexOf(vm.question);
-                        if (qIndex == -1) {
+                        var qIndex = $filter('getById')($scope.$parent.pmp.qMarked, vm.question.id);
+                        
+                        if (qIndex == null) {
                             $scope.$parent.pmp.qMarked.push(vm.question);
                         }
                     } else {
