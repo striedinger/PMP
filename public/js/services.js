@@ -14,7 +14,7 @@ angular.module('app.services', [])
 
     /** @ngInject */
     function sessions($log, $http) {
-        var apiHost = 'http://localhost:8888/pmp/public/api';
+        var apiHost = 'http://localhost/pmp_hugo/PMP/public/api';
         var service = {
             apiHost: apiHost,
             getSessions: getSessions,

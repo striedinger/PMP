@@ -87,6 +87,15 @@ class ApiController extends Controller
                            // return response()->json(['success' => false, 'message' => "tiempo: ".$session->exam->duration]);
                             DB::beginTransaction();
                             if($session->time>0){
+
+                                $now = new DateTime();
+                                $now = strtotime($now->format('Y-m-d H:i:s'));
+                                $last_update = strtotime($session->updated_at);
+                                $difference =  $now - $last_update  ;
+                                $session->time = $session->time - $difference;
+                                 
+                                $session->save();
+
                                 if($session->save()){
                                     if($answer->save()){
                                          DB::commit();
