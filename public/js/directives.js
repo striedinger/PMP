@@ -148,7 +148,7 @@
             }
 
             vm.isConfirmarDisabled = function() {
-                if ( !$scope.$parent.pmp.timerRunning || vm.question.answer == null && vm.question.local_answer == null) {
+                if (vm.question.answer == null && vm.question.local_answer == null) {
                     return true;
                 } else {
                     return false;
@@ -156,14 +156,14 @@
             }
 
             vm.isNextDisabled = function() {
-                if ( $scope.$parent.pmp.timerRunning || vm.question.answer != null && vm.question.marked==0 ) {
+                if (vm.question.answer != null && vm.question.marked==0) {
                     return false;
                 } else {
                     return true;
                 }
             }
             vm.isMarkDisabled = function() {
-                if ( !$scope.$parent.pmp.timerRunning || (vm.question.answer == null && vm.question.local_answer == null) || (vm.question.answer != null && vm.question.marked == 0)) {
+                if ((vm.question.answer == null && vm.question.local_answer == null) || (vm.question.answer != null && vm.question.marked == 0)) {
                     return true;
                 } else {
                     return false;
