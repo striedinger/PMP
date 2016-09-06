@@ -155,6 +155,8 @@
  
     <script src="{{ URL::asset('js/circle-progress.js') }}"></script>
     <script src="{{ URL::asset('js/bootstrap-datetimepicker.min.js') }}"></script>
+    <script src="{{ URL::asset('bower_components/angular-cookies/angular-cookies.min.js') }}"></script>
+
  
     {{-- <script src="{{ elixir('js/app.js') }}"></script> --}}
     @yield('scripts')

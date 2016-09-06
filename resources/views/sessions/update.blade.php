@@ -16,10 +16,10 @@ Examen
 					</div>
 					<div class="stop-timer">
 							<div class="btn-group">
-								<button class="btn btn-warning " ng-click="stopTimer()" ng-show="timerRunning"><i class="fa fa-pencil"></i> Parar</button>
+								<button class="btn btn-warning " ng-click="stopTimer()" ng-show="pmp.timerRunning"><i class="fa fa-pencil"></i> Parar</button>
 							</div>
 							<div class="btn-group">
-								<button class="btn btn-warning " ng-click="startTimer()" ng-show="!timerRunning"><i class="fa fa-pencil"></i> Continuar</button>
+								<button class="btn btn-warning " ng-click="startTimer()" ng-show="!pmp.timerRunning"><i class="fa fa-pencil"></i> Continuar</button>
 							</div>
 					</div>
 				</div>
@@ -31,11 +31,11 @@ Examen
 					<p>
 						<a href="#marked" role="button" data-toggle="collapse" aria-expanded="false" aria-controls="marked">Preguntas marcadas <span class="badge">@{{pmp.marked.size()}}</span></a>
 						<div class="collapse" id="marked">
-							<ul>
+							
+						</div><ul>
 								<li ng-repeat="marked in pmp.qMarked" ng-click="changeQuestion(marked.number)">@{{marked.number}}</li>
 								 
 							</ul>
-						</div>
 					</p>
 				</div>
 			</div>

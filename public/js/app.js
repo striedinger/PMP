@@ -1,6 +1,7 @@
 var app = angular.module('app', 
 	[
 	    '19degrees.ngSweetAlert2',	
+	    'ngCookies',
 		'app.controllers',
 		'ui.bootstrap',
 		'app.services',  

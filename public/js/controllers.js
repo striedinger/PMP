@@ -12,7 +12,7 @@ angular.module('app.controllers', [])
     $scope.pmp.qTotalAnswered  = 2; //TODO obtener de servidor
 	$scope.pmp.dataHasLoaded = false;
     $scope.pmp.duration = 0;
-    $scope.timerRunning = true;
+    $scope.pmp.timerRunning = true;
    
 
 //***from hugo
@@ -42,29 +42,45 @@ angular.module('app.controllers', [])
     	$scope.pmp.qMarked = $scope.pmp.data.marked;
     	$scope.pmp.qCurrent = $scope.pmp.data.questions[0];
     	$scope.pmp.qTotal = $scope.pmp.data.session.exam.questions;
-        $scope.pmp.duration = $scope.pmp.data.session.exam.duration*60;
+        $scope.pmp.duration = $scope.pmp.data.session.time;
         $scope.pmp.qIndex = 1;
         $scope.$broadcast('timer-set-countdown-seconds', $scope.pmp.duration);
-        if($scope.pmp.data.session.active != 1){
-             $scope.stopTimer();
-               $scope.timerRunning = false;
+        if($scope.pmp.data.session.active == 0){
+             $scope.$broadcast('timer-stop');
+             $scope.pmp.timerRunning = false;
         }
+
+        //verificar si el examen ya finalizo
     }
 
     $scope.changeQuestion =function (number) {
          $scope.pmp.qCurrent =  $scope.pmp.data.questions[number-1];
          $scope.pmp.qIndex = number;
     }
-    $scope.startTimer = function (){
-                $scope.$broadcast('timer-start');
-                $scope.timerRunning = true;
+    $scope.startTimer = function() {
+     sessions.start(session_id, "token").then(function(data) {
+         if (!$.isEmptyObject(data) && data !== null && typeof(data) != "undefined") {
+             $scope.$broadcast('timer-start');
+             $scope.pmp.timerRunning = true;
+              $scope.pmp.duration = data.session.time;
 
-                //todo server
+         } else {
+             $scope.pmp.timerRunning = false;
+         }
+     });
     };
+
     $scope.stopTimer = function (){
-                $scope.$broadcast('timer-stop');
-                $scope.timerRunning = false;
-                  //todo server
+     sessions.stop(session_id, "token").then(function(data) {
+         if (!$.isEmptyObject(data) && data !== null && typeof(data) != "undefined") {
+             $scope.$broadcast('timer-stop');
+             $scope.pmp.timerRunning = false;
+             $scope.pmp.duration = data.session.time;
+
+         } else {
+             $scope.pmp.timerRunning = true;
+         }
+     });
     };
 
     $scope.finished = function () {

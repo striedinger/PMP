@@ -5,6 +5,9 @@ use App\Http\Requests;
 use App\Repositories\SessionRepository;
 use App\Repositories\AnswerRepository;
 use Dingo\Api\Routing\Helpers;
+use DateTime;
+use DB;
+date_default_timezone_set('America/Bogota');
 class ApiController extends Controller
 {
     use Helpers;
@@ -23,20 +26,29 @@ class ApiController extends Controller
     }
     public function endSession(Request $request, $id){
         if($session = $this->session->forId($id)){
-            if(isset($request->answer) && isset($request->option) && in_array($request->option, array("A", "B", "C", "D"))){
+            /*if(isset($request->answer) && isset($request->option) && in_array($request->option, array("A", "B", "C", "D"))){
                 if($answer = $this->answers->forId($request->answer)){
                     $answer->answer = $request->option;
                     $answer->save();
                 }else{
                     throw new \Symfony\Component\HttpKernel\Exception\NotFoundHttpException('No se encontro la respuesta a guardar');
                 }
-            }
+            }*/
+            //determinar diferencia de tiempo
+            $now = new DateTime();
+            $now = strtotime($now->format('Y-m-d H:i:s'));
+            $last_update = strtotime($session->updated_at);
+            $difference =  $now - $last_update  ;
+            $session->time = $session->time - $difference;
             $session->active = false;
             $session->save();
+              return response()->json(['success'=>true, 'session'=>$session]);
         }else{
             throw new \Symfony\Component\HttpKernel\Exception\NotFoundHttpException('No se encontro la sesion');
         }
+          
     }
+
     public function questions(Request $request, $id){
         if($session = $this->session->forId($id)){
             $answers = $this->answers->forSession($session->id);
@@ -57,22 +69,46 @@ class ApiController extends Controller
         if($session = $this->session->forId($id)){
             if(isset($request->answer) && isset($request->option) && in_array($request->option, array("A", "B", "C", "D"))){
                 if($answer = $this->answers->forId($request->answer)){
-
+ 
                     if(!isset($answer->answer) || $answer->marked == true){
-                        $answer->answer = $request->option;
-                        if($request->marked){
-                            $answer->marked = true;
+                        if($session->active == 1){
+                            $answer->answer = $request->option;
+                            if($request->marked){
+                                $answer->marked = true;
+                            }else{
+                                $answer->marked = false;
+                            }
+                            //determinar diferencia de tiempo
+                            $now = new DateTime;
+                            $last_update = $session->updated_at;
+                            $difference =  strtotime(date($now->diff($last_update)->format('%Y-m-d H:i:s')));
+                            $session->exam->duration = $session->exam->duration - $difference;
+                            //$session->time = $difference."";
+                           // return response()->json(['success' => false, 'message' => "tiempo: ".$session->exam->duration]);
+                            DB::beginTransaction();
+                            if($session->time>0){
+                                if($session->save()){
+                                    if($answer->save()){
+                                         DB::commit();
+                                        return response()->json(['Xsuccess' => true, 'answer' => $answer]);
+                                    }else{
+                                         DB::rollback();
+                                        return response()->json(['success' => false, 'message' => 'Error guardando']);
+                                    }
+                                }else{
+                                     return response()->json(['success' => false, 'message' => 'Error guardando']);
+                                     DB::rollback();
+                                }
+                                
+                            }else{
+                                return response()->json(['success'=>false, 'message' => 'Este examen ya finalizó']);
+                            }
+
+                           
+                            return response()->json(['success'=>false, 'message' => 'Pregunta ya habia sido respondida']);
                         }else{
-                            $answer->marked = false;
+                              throw new \Symfony\Component\HttpKernel\Exception\NotFoundHttpException('La session esta detenida.'); 
                         }
-                        if($answer->save()){
-                            return response()->json(['success' => true, 'answer' => $answer]);
-                        }else{
-                            return response()->json(['success' => false, 'message' => 'Error guardando']);
-                        }
-    
-                        return response()->json(['success'=>false, 'message' => 'Pregunta ya habia sido respondida']);
-              
                 }else{
                     throw new \Symfony\Component\HttpKernel\Exception\NotFoundHttpException('No se encontro la pregunta');                    
                 }
@@ -83,4 +119,5 @@ class ApiController extends Controller
             throw new \Symfony\Component\HttpKernel\Exception\NotFoundHttpException('No se encontro la sesion');
         }
     }
+}
 }

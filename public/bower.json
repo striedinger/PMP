@@ -6,7 +6,8 @@
     "angular-ui-router": "^0.3.1",
     "angular-sweetalert-2": "latest",
     "angular-spinner": "latest",
-    "angular-sweetalert": "angular-h-sweetalert#^1.4.7"
+    "angular-sweetalert": "angular-h-sweetalert#^1.4.7",
+    "angular-cookies": "^1.5.8"
   },
   "devDependencies": {
     "angular-mocks": "^1.5.0"

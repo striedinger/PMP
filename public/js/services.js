@@ -18,7 +18,9 @@ angular.module('app.services', [])
         var service = {
             apiHost: apiHost,
             getSessions: getSessions,
-            save: save
+            save: save,
+            stop: stop,
+            start: start
         };
         var config = {};
 
@@ -78,6 +80,58 @@ angular.module('app.services', [])
             function getAnswersFailed(error) {
                 $log.error('XHR Failed for getAnswers.\n' + angular.toJson(error.data, true));
                 return new_answers;
+            }
+        }
+
+         function stop(id,token) {
+            $log.info("deteniendo la seccion");
+            return $http.post(apiHost +"/sessions/" + id + "/end")
+                .then(session_stopComplete)
+                .catch(session_stopFailed);
+
+            function session_stopComplete(response) {
+                $log.info("devolviendo de stop:", response);
+                if (response.status == 200) { //Respuesta ok
+                    if (typeof(response.data) != "undefined" && response.data != null) {//verificar que envio preguntas
+                        return response.data;
+                    } else {
+                        return null //si no se ha realizado el insturmento
+                    }
+                }
+
+                return null;
+
+            }
+
+            function session_stopFailed(error) {
+                $log.error('XHR Failed for stop:.\n' + angular.toJson(error.data, true));
+                return null;
+            }
+        }
+
+        function start(id,token) {
+            $log.info("deteniendo la seccion");
+            return $http.post(apiHost +"/sessions/" + id + "/start")
+                .then(session_startComplete)
+                .catch(session_startFailed);
+
+            function session_startComplete(response) {
+                $log.info("devolviendo de start:", response);
+                if (response.status == 200) { //Respuesta ok
+                    if (typeof(response.data) != "undefined" && response.data != null) {//verificar que envio preguntas
+                        return response.data;
+                    } else {
+                        return null //si no se ha realizado el insturmento
+                    }
+                }
+
+                return null;
+
+            }
+
+            function session_startFailed(error) {
+                $log.error('XHR Failed for start:.\n' + angular.toJson(error.data, true));
+                return null;
             }
         }
 
