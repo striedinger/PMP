@@ -67,6 +67,7 @@ angular.module('app.services', [])
                 $log.info("devolviendo :", response);
                 if (response.status == 200) { //Respuesta ok
                     if (typeof(response.data) != "undefined" && response.data != null) {//verificar que envio preguntas
+                        question.local_answer = null; //Revisar
                         return response.data;
                     } else {
                         return null //si no se ha realizado el insturmento
