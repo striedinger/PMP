@@ -6,7 +6,7 @@
     function question() {
         var directive = {
             restrict: 'E',
-            templateUrl: '/pmp_hugo/PMP/public/js/templates/question.template.html',
+            templateUrl: '/pmp/public/js/templates/question.template.html',
             //template: '<button type="button" class="btn btn-default">button</button>',
             scope: {
                 question: '='

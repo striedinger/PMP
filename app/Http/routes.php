@@ -10,10 +10,14 @@
 | and give it the controller to call when that URI is requested.
 |
 */
+header('Access-Control-Allow-Origin: http://localhost:8888');
+header('Access-Control-Allow-Origin: *');
+header('Access-Control-Allow-Methods: GET, POST, PATCH, PUT, DELETE, OPTIONS');
+header('Access-Control-Allow-Headers: Origin, Content-Type, X-Auth-Token');
 
 $api = app('Dingo\Api\Routing\Router');
 
-$api->version('v1', function ($api) {
+$api->version('v1', ['middlware' => 'cors'],function ($api) {
 	$api->get('/sessions/{id}/questions', 'App\Http\Controllers\ApiController@questions');
 	$api->post('/sessions/{id}', 'App\Http\Controllers\ApiController@saveAnswer');
 	$api->post('/sessions/{id}/start', 'App\Http\Controllers\ApiController@startSession');

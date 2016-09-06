@@ -29,7 +29,12 @@ Resultados
 					<td>{{ $session->id }}</td>
 					<td>{{ $session->exam->name }}</td>
 					<td>{{ $session->user->name }}</td>
-					<td><a href="{{ url('/results') . '/' . $session->id }}" class="btn btn-primary btn-xs"><i class="fa fa-search"></i></a></td>
+					<td>
+						@if($session->time!=0)
+						<a href="{{ url('/sessions') . '/' . $session->id }}" class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i></a>
+						@endif
+						<a href="{{ url('/results') . '/' . $session->id }}" class="btn btn-primary btn-xs"><i class="fa fa-search"></i></a>
+					</td>
 				</tr>
 			@endforeach
 			</tbody>
