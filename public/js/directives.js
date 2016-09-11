@@ -35,6 +35,11 @@
             vm.disable_next = true;
             vm.spinner = false;
 
+            //normalizar??
+            vm.question.marked = parseInt(vm.question.marked);
+            vm.question.number = parseInt(vm.question.number);
+
+
             vm.set_selected_answer = function(qLetter) {
                 if (vm.question.answer == null) { //si no tiene respuesta confirmada o marcada
                     //verificar si esta marcada

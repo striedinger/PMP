@@ -28,6 +28,8 @@ angular.module('app.controllers', [])
 
             if (!$.isEmptyObject(data) && data !== null && typeof(data) != "undefined") {
                 $scope.pmp.data = data;
+
+
                 active();
             }else{
                 $scope.pmp.data= {};
@@ -62,7 +64,7 @@ angular.module('app.controllers', [])
          if (!$.isEmptyObject(data) && data !== null && typeof(data) != "undefined") {
              $scope.$broadcast('timer-start');
              $scope.pmp.timerRunning = true;
-              $scope.pmp.duration = data.session.time;
+             $scope.pmp.duration = data.session.time;
 
          } else {
              $scope.pmp.timerRunning = false;
