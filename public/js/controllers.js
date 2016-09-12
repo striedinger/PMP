@@ -45,14 +45,33 @@ angular.module('app.controllers', [])
     	$scope.pmp.qCurrent = $scope.pmp.data.questions[0];
     	$scope.pmp.qTotal = $scope.pmp.data.session.exam.questions;
         $scope.pmp.duration = $scope.pmp.data.session.time;
+        $scope.pmp.created_at = $scope.pmp.data.session.created_at;
+        $scope.pmp.updated_at = $scope.pmp.data.session.updated_at;
         $scope.pmp.qIndex = 1;
+        $scope.init_time = 0;
         $scope.$broadcast('timer-set-countdown-seconds', $scope.pmp.duration);
+        if($scope.pmp.data.session.exam.duration == 0){
+            $scope.infinito = true;
+            //$scope.$broadcast('timer-reset');
+            date_init = new Date( $scope.pmp.created_at );
+            date_updated = new Date( $scope.pmp.updated_at );
+            stoped_time = $scope.dayDiff(date_updated);
+            $scope.init_time =  date_init.getTime() + stoped_time;
+            $scope.$broadcast('timer-set-startTime', $scope.init_time );
+
+            
+        }else{
+            $scope.infinito = false;
+        }
         if($scope.pmp.data.session.active == 0){
              $scope.$broadcast('timer-stop');
              $scope.pmp.timerRunning = false;
         }
-
         //verificar si el examen ya finalizo
+
+        if($scope.pmp.duration == 0 && $scope.pmp.data.session.exam.duration !=0){
+            swal("Este examen ya finalizó");
+        }
     }
 
     $scope.changeQuestion =function (number) {
@@ -65,6 +84,11 @@ angular.module('app.controllers', [])
              $scope.$broadcast('timer-start');
              $scope.pmp.timerRunning = true;
              $scope.pmp.duration = data.session.time;
+
+             date_updated = new Date( $scope.pmp.updated_at );
+            stoped_time = $scope.dayDiff(date_updated);
+            $scope.init_time =  date_init.getTime() + stoped_time;
+            $scope.$broadcast('timer-set-startTime', $scope.init_time +3 );
 
          } else {
              $scope.pmp.timerRunning = false;
@@ -79,6 +103,12 @@ angular.module('app.controllers', [])
              $scope.pmp.timerRunning = false;
              $scope.pmp.duration = data.session.time;
 
+
+            date_updated = new Date( $scope.pmp.updated_at );
+            stoped_time = $scope.dayDiff(date_updated);
+            $scope.init_time =  date_init.getTime() + stoped_time;
+            $scope.$broadcast('timer-set-startTime', $scope.init_time  );
+
          } else {
              $scope.pmp.timerRunning = true;
          }
@@ -91,5 +121,13 @@ angular.module('app.controllers', [])
     $scope.$on('timer-stopped', function (event, data){
                 console.log('Timer Stopped - data = ', data);
     });
+
+    $scope.dayDiff = function(firstDate){
+        var date2 = new Date();
+        var date1 = new Date(firstDate);
+        var timeDiff = Math.abs(date2.getTime() - date1.getTime());   
+        var diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24)); 
+        return timeDiff;
+    }
  
 });

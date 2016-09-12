@@ -39,7 +39,11 @@ class ApiController extends Controller
             $now = strtotime($now->format('Y-m-d H:i:s'));
             $last_update = strtotime($session->updated_at);
             $difference =  $now - $last_update  ;
-            $session->time = $session->time - $difference;
+            if($session->exam->duration == 0){
+                $session->time = $session->time + $difference;
+            }else{
+                $session->time = $session->time - $difference;
+            }
             $session->active = false;
             $session->save();
               return response()->json(['success'=>true, 'session'=>$session]);
@@ -79,20 +83,18 @@ class ApiController extends Controller
                                 $answer->marked = false;
                             }
                             //determinar diferencia de tiempo
-                            $now = new DateTime;
-                            $last_update = $session->updated_at;
-                            $difference =  strtotime(date($now->diff($last_update)->format('%Y-m-d H:i:s')));
-                            $session->exam->duration = $session->exam->duration - $difference;
-                            //$session->time = $difference."";
-                           // return response()->json(['success' => false, 'message' => "tiempo: ".$session->exam->duration]);
                             DB::beginTransaction();
-                            if($session->time>0){
+                            if($session->time>0 || $session->exam->duration == 0){
 
                                 $now = new DateTime();
                                 $now = strtotime($now->format('Y-m-d H:i:s'));
                                 $last_update = strtotime($session->updated_at);
                                 $difference =  $now - $last_update  ;
-                                $session->time = $session->time - $difference;
+                                if($session->exam->duration == 0){
+                                    $session->time = $session->time + $difference;
+                                }else{
+                                    $session->time = $session->time - $difference;
+                                }                               
                                  
                                 $session->save();
 

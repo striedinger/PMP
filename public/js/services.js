@@ -21,7 +21,7 @@ angular.module('app.services', [])
             save: save,
             stop: stop,
             start: start
-        };
+        };  
         var config = {};
 
         return service;
@@ -38,6 +38,9 @@ angular.module('app.services', [])
                 $log.info("devolviendo :", response);
                 if (response.status == 200) { //Respuesta ok
                     if (typeof(response.data.questions) != "undefined" && response.data.questions != null) {//verificar que envio preguntas
+                        response.data.session.exam.questions = parseInt(response.data.session.exam.questions);
+                        response.data.session.time = parseInt(response.data.session.time);
+                        response.data.session.exam.duration = parseInt(response.data.session.exam.duration);
                         return response.data;
                     } else {
                         return null //si no se ha realizado el insturmento
