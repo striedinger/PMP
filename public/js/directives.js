@@ -183,7 +183,7 @@
                 return (vm.question.number == vm.question.session.exam.questions) ? true : false;
             }
             var steps_question = function(steps) {
-                $scope.$parent.pmp.qIndex = vm.question.number + steps;
+                $scope.$parent.pmp.qIndex = parseInt(vm.question.number) + steps;
                 $scope.$parent.pmp.qCurrent = $scope.$parent.pmp.questions[($scope.$parent.pmp.qIndex - 1)];
                 vm.show_finalizar = false;
 
