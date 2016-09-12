@@ -21,8 +21,9 @@
 
         /** @ngInject */
         function linkf(scope, el, attr, vm) {
-            vm.qTotal = vm.question.session.exam.questions;
+            vm.qTotal = parseInt(vm.question.session.exam.questions);
             //vm.qIndex = scope.pmp.qIndex;
+
 
         }
         /** @ngInject */
@@ -38,6 +39,7 @@
             //normalizar??
             vm.question.marked = parseInt(vm.question.marked);
             vm.question.number = parseInt(vm.question.number);
+
 
 
             vm.set_selected_answer = function(qLetter) {
@@ -81,7 +83,7 @@
             }
             vm.next = function() { //Maneja siguiente, confirmar y finalizar
                 //local_answer maneja respuestas locales, answer maneja respuesta final para serividor
-                if (vm.question.number <= vm.qTotal) {
+                if (parseInt(vm.question.number) <= vm.qTotal) {
                     //Para dar siguiente se debe cumplir dos condiciones: que este marcada, o que este seleccionada al menos una respuesta En otro caso no avanzar
                     if (vm.question.marked == 1 || vm.question.local_answer != null ) { //Se ha seleccionado una pregunta o marcado
                         //Guardar y cargar siguiente pregunta.
@@ -122,6 +124,7 @@
                     } else {
 
                         swal("Redireccionado a resultados"); //Ultima pregunta
+    /**************/
                         window.location.replace("http://localhost/pmp_hugo/PMP/public/results"); //CAMBIAR
                     }
                 }
@@ -132,7 +135,7 @@
 
             vm.marcar = function () {
             	//Marcar si no esta confirmada
-            	if(vm.question.number <= vm.qTotal ){
+            	if(parseInt(vm.question.number) <= vm.qTotal ){
                     if(vm.question.local_answer != null){//si se ha elejido alguna otra opcion.
                         vm.question.answer = vm.question.local_answer;
                     }
@@ -193,7 +196,7 @@
                     if(!$.isEmptyObject(data) && data !== null && typeof(data) != "undefined") {
                         if (data.answer != null) {
                             vm.question = data.answer;
-                             if (vm.question.number < vm.qTotal) {
+                             if (parseInt(vm.question.number) < vm.qTotal) {
                                  steps_question(1); //cargar siguiente pregunta
                              }
                         } else {

@@ -14,7 +14,7 @@ Examen
 					<div class="col-xs-8">
 						Examen
 					</div>
-					<div class="stop-timer"  >
+					<div class="stop-timer"   ng-if="!infinito">
 							<div class="btn-group" >
 								<button class="btn btn-warning " ng-click="stopTimer()" ng-show="pmp.timerRunning"><i class="fa fa-pencil"></i> Parar</button>
 							</div>
@@ -27,8 +27,8 @@ Examen
 					<uib-progressbar max="pmp.qTotal" value="pmp.qTotalAnswered"><span style="color:white; white-space:nowrap;">@{{pmp.qTotalAnswered}} / @{{pmp.qTotal}}</span></uib-progressbar>
 					<p>Pregunta @{{pmp.qIndex}} de @{{pmp.qTotal}}</p>
 					<p>Tiempo dedicado: 
-					<timer ng-if="!infinito" interval="1000" countdown="1000">@{{hhours}}:@{{mminutes}}:@{{sseconds}}</timer>
-					<timer ng-if="infinito"  interval="1000" start-time="init_time" >@{{ddays}}:@{{hhours}}:@{{mminutes}}:@{{sseconds}}</timer>
+					<timer ng-if="infinito"  interval="1000" start-time="init_time" autostart="false"  finish-callback="finished()">@{{ddays}}:@{{hhours}}:@{{mminutes}}:@{{sseconds}}</timer>
+					<timer ng-if="!infinito" interval="1000" countdown="1000" finish-callback="finished()">@{{hhours}}:@{{mminutes}}:@{{sseconds}}</timer>
 					</p>
 					<p><a href="">Ver resultados</a></p>
 					<p>
