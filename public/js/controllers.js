@@ -122,7 +122,7 @@ angular.module('app.controllers', [])
         swal({
             text:"Se terminó el tiempo", 
         }).then(function(){
-                window.location.replace("http://localhost/pmp_hugo/PMP/public/results"); //CAMBIAR
+                window.location.replace("http://localhost:8888/pmp/public/results/" + session_id); //CAMBIAR
         });
     }
 
