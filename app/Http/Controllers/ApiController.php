@@ -95,20 +95,23 @@ class ApiController extends Controller
                                 }else{
                                     $session->time = $session->time - $difference;
                                 }                               
-                                 
-                                $session->save();
-
-                                if($session->save()){
-                                    if($answer->save()){
-                                         DB::commit();
-                                        return response()->json(['Xsuccess' => true, 'answer' => $answer]);
+                                
+                                if($session->time>0){
+                                    $session->save();
+                                    if($session->save()){
+                                        if($answer->save()){
+                                             DB::commit();
+                                            return response()->json(['Xsuccess' => true, 'answer' => $answer]);
+                                        }else{
+                                             DB::rollback();
+                                            return response()->json(['success' => false, 'message' => 'Error guardando']);
+                                        }
                                     }else{
+                                         return response()->json(['success' => false, 'message' => 'Error guardando']);
                                          DB::rollback();
-                                        return response()->json(['success' => false, 'message' => 'Error guardando']);
                                     }
                                 }else{
-                                     return response()->json(['success' => false, 'message' => 'Error guardando']);
-                                     DB::rollback();
+                                    return response()->json(['success'=>false, 'message' => 'Este examen ya finalizó.']);
                                 }
                                 
                             }else{
