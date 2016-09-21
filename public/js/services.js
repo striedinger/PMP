@@ -43,9 +43,9 @@ angular.module('app.services', [])
                         response.data.session.exam.questions = parseInt(response.data.session.exam.questions);
                         response.data.session.time = parseInt(response.data.session.time);
                         response.data.session.exam.duration = parseInt(response.data.session.exam.duration);
-                        /*if(typeof(response.data.session)!="undefined"){
+                        if(typeof(response.data.questions)!="undefined"){
                             response.data.session.total_answered = $filter('answered')(response.data.questions);
-                        }*/
+                        }
                         return response.data;
                     } else {
                         return null //si no se ha realizado el insturmento

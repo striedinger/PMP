@@ -197,8 +197,13 @@
                         if (data.answer != null) {
                             vm.question = data.answer;
                              if (parseInt(vm.question.number) < vm.qTotal) {
-                                //$scope.$parent.pmp.qTotalAnswered++;
+                                if(vm.question.marked==0){
+                                  $scope.$parent.pmp.qTotalAnswered++;
+                                }
                                  steps_question(1); //cargar siguiente pregunta
+
+                                 //actualizar respondidas
+
                              }
                         } else {
                             swal(data.message);

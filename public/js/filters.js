@@ -25,8 +25,8 @@ app.filter('answered', function() {
     var output = [];
     // Ensure that the passed in data is a number
     var i = 0;
-    while (i<questions[0].session.exam.questions) {
-      if(questions[i].answer!=null){
+    while (i<questions.length) {
+      if(questions[i].answer!=null && questions[i].marked == 0 ){
         output.push(questions[i]);
       }
       i = i+1;

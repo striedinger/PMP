@@ -10,9 +10,8 @@ angular.module('app.config', []).config(config);
 
 var local = {
   	"apiHost": "http://localhost/pmp_hugo/PMP/public/api",
-    "questionTemplate": "'/pmp/public/js/templates/question.template.html'",
-    "resultUrl":"http://localhost/pmp_hugo/pmp/public/results/",
-    "port": "3000"
+    "questionTemplate": "/pmp_hugo/pmp/public/js/templates/question.template.html",
+    "resultUrl":"http://localhost/pmp_hugo/PMP/public/results/"
   };
   var prod = {
     "login":  "http://colorado.uninorte.edu.co/evadoc_api/login/google",
