@@ -30,7 +30,7 @@ Examen
 					<timer ng-if="infinito"  interval="1000" start-time="init_time" autostart="false"  finish-callback="finished()">@{{ddays}}:@{{hhours}}:@{{mminutes}}:@{{sseconds}}</timer>
 					<timer ng-if="!infinito" interval="1000" countdown="1000" finish-callback="finished()">@{{hhours}}:@{{mminutes}}:@{{sseconds}}</timer>
 					</p>
-					<p><a href="">Ver resultados</a></p>
+				 
 					<p>
 						<a href="#marked" role="button" data-toggle="collapse" aria-expanded="false" aria-controls="marked">Preguntas marcadas <span class="badge">@{{pmp.marked.size()}}</span></a>
 						<div class="collapse" id="marked">

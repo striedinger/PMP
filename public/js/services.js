@@ -13,8 +13,10 @@ angular.module('app.services', [])
   	.factory('sessions', sessions);
 
     /** @ngInject */
-    function sessions($log, $http) {
-        var apiHost = 'http://localhost:8888/pmp/public/api';
+ 
+    function sessions($log, $http,$filter, apiConf) {
+        var apiHost = apiConf.apiHost;
+ 
         var service = {
             apiHost: apiHost,
             getSessions: getSessions,
@@ -41,6 +43,9 @@ angular.module('app.services', [])
                         response.data.session.exam.questions = parseInt(response.data.session.exam.questions);
                         response.data.session.time = parseInt(response.data.session.time);
                         response.data.session.exam.duration = parseInt(response.data.session.exam.duration);
+                        if(typeof(response.data.questions)!="undefined"){
+                            response.data.session.total_answered = $filter('answered')(response.data.questions);
+                        }
                         return response.data;
                     } else {
                         return null //si no se ha realizado el insturmento
@@ -71,6 +76,7 @@ angular.module('app.services', [])
                 if (response.status == 200) { //Respuesta ok
                     if (typeof(response.data) != "undefined" && response.data != null) {//verificar que envio preguntas
                         question.local_answer = null; //Revisar
+
                         return response.data;
                     } else {
                         return null //si no se ha realizado el insturmento
