@@ -16,7 +16,7 @@ Editar Pregunta
 			Editar Pregunta
 		</div>
 		<div class="panel-body">
-			<form method="post" action>
+			<form method="post" action enctype="multipart/form-data">
 				{{ csrf_field() }}
 				<div class="form-group">
 					<label>Pregunta</label>
@@ -46,7 +46,7 @@ Editar Pregunta
                     @endif
 				</div>
 				<div class="form-group">
-					<label>Opcion Bº</label>
+					<label>Opcion B</label>
 					<textarea class="form-control" name="optionB">{{ $question->optionB }}</textarea>
 					@if ($errors->has('optionB'))
                     <span class="help-block">
@@ -104,6 +104,22 @@ Editar Pregunta
                     </span>
                     @endif
 				</div>
+				<div class="form-group">
+					<label>Tema</label>
+					<input class="form-control" name="subject" value="{{ $question->subject }}">
+					@if ($errors->has('optionD'))
+                    <span class="help-block">
+                        <strong>{{ $errors->first('optionD') }}</strong>
+                    </span>
+                    @endif
+				</div>
+				<div class="form-group">
+					<label>Imagen</label>
+					<input type="file" name="image">
+				</div>
+				@if($question->image)
+					<img src="{{ url('/') . '/uploads/' . $question->image }}" style="max-width:100%">
+				@endif
 				<div class="form-group">
 					<div class="checkbox">
 						<label>

@@ -70,6 +70,10 @@ Route::post('/questions/update/{id}', 'QuestionController@update');
 
 Route::delete('/questions/delete/{id}', 'QuestionController@delete');
 
+Route::get('/questions/import', 'QuestionController@import');
+
+Route::post('/questions/import', 'QuestionController@import');
+
 //Sessions
 
 Route::get('/sessions/{id}', 'SessionController@update');

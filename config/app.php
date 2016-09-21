@@ -162,6 +162,7 @@ return [
         Dingo\Api\Provider\LaravelServiceProvider::class,
         Laracasts\Utilities\JavaScript\JavaScriptServiceProvider::class,
         Barryvdh\Cors\ServiceProvider::class,
+        Maatwebsite\Excel\ExcelServiceProvider::class,
     ],
 
     /*
@@ -210,7 +211,8 @@ return [
         'Form' => Collective\Html\FormFacade::class,
         'Html' => Collective\Html\HtmlFacade::class,
         'API' => Dingo\Api\Facade\API::class,
-        'APIRoute' => Dingo\Api\Facade\Route::class
+        'APIRoute' => Dingo\Api\Facade\Route::class,
+        'Excel' => Maatwebsite\Excel\Facades\Excel::class,
 
     ],
 

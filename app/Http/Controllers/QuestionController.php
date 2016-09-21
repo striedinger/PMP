@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Repositories\QuestionRepository;
 use App\Question;
+use Excel;
 
 class QuestionController extends Controller
 {
@@ -37,6 +38,13 @@ class QuestionController extends Controller
                 'process_id' => 'required',
                 'area_id' => 'required',
             ]);
+            if(isset($request->image)){
+                $image = $request->file('image')->getClientOriginalName();
+                $path = base_path() . '/public/uploads/';
+                $request->file('image')->move($path , $image);
+            }else{
+                $image = null;
+            }
             Question::create([
                 'question' => $request->question,
                 'description' => $request->description,
@@ -47,7 +55,9 @@ class QuestionController extends Controller
                 'answer' => $request->answer,
                 'process_id' => $request->process_id,
                 'area_id' => $request->area_id,
-                'active' => $request->active? true: false
+                'active' => $request->active? true: false,
+                'image' => $image,
+                'subject' => $request->subject? $request->subject : null
             ]);
             $request->session()->flash('status', 'La pregunta ha sido creada');
             return redirect('/questions');
@@ -74,6 +84,12 @@ class QuestionController extends Controller
                     'process_id' => 'required',
                     'area_id' => 'required',
                 ]);
+                if(isset($request->image)){
+                    $image = $request->file('image')->getClientOriginalName();
+                    $path = base_path() . '/public/uploads/';
+                    $request->file('image')->move($path , $image);
+                    $question->image = $image;
+                }
                 $question->question = $request->question;
                 $question->description = $request->description;
                 $question->optionA = $request->optionA;
@@ -84,6 +100,7 @@ class QuestionController extends Controller
                 $question->process_id = $request->process_id;
                 $question->area_id = $request->area_id;
                 $question->active = $request->active? true: false;
+                $question->subject = $request->subject? $request->subject : null;
                 $question->save();
                 $request->session()->flash('status', 'La pregunta ha sido actualizada');
                 return redirect('/questions/update/' . $question->id);
@@ -97,6 +114,21 @@ class QuestionController extends Controller
             ]);
         }else{
             abort(404);
+        }
+    }
+
+    public function import(Request $request){
+        if($request->isMethod('post')){
+            if($request->hasFile('file')){
+                Excel::load($request->file('file'), function($reader){
+                    $results = $reader->get();
+                    return $results->toArray();
+                });
+            }else{
+                abort(404);
+            }
+        }else{
+            return view('questions.import');
         }
     }
 

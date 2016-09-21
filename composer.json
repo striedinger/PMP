@@ -11,7 +11,8 @@
         "laravelcollective/html": "5.2.*",
         "dingo/api": "1.0.*@dev",
         "laracasts/utilities": "~2.0",
-        "barryvdh/laravel-cors": "^0.8.2"
+        "barryvdh/laravel-cors": "^0.8.2",
+        "maatwebsite/excel": "~2.1.0"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

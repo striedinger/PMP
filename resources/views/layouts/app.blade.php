@@ -76,19 +76,11 @@
                             <a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Preguntas <i class="caret"></i></a>
                             <ul class="dropdown-menu">
                                 <li><a href="{{ url('/questions/create') }}">Crear Pregunta</a></li>
+                                <li><a href="{{ url('/questions/import') }}">Importar Preguntas</a></li>
                                 <li><a href="{{ url('/questions') }}">Ver Preguntas</a></li>
                             </ul>
                         </li>
                         <li><a href="{{ url('/results') }}">Resultados</a></li>
-                        <li><a href="">Transacciones</a></li>
-                        <li class="dropdown">
-                            <a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Configuración <i class="caret"></i></a>
-                            <ul class="dropdown-menu">
-                                <li><a href="">Lista de Planes</a></li>
-                                <li><a href="">Lista de Areas</a></li>
-                                <li><a href="">Lista de Grupos de Procesos</a></li>
-                            </ul>
-                        </li>
                         @endif
                     @endif
                 </ul>

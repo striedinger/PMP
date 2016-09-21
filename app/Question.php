@@ -11,7 +11,7 @@ class Question extends Model
 
     protected $dates = ['deleted_at'];
 
-    protected $fillable = ['question', 'description', 'optionA', 'optionB', 'optionC', 'optionD', 'answer', 'process_id','area_id', 'active'];
+    protected $fillable = ['question', 'description', 'optionA', 'optionB', 'optionC', 'optionD', 'answer', 'process_id','area_id', 'active', 'image', 'subject'];
 
     protected $with = ['area', 'process'];
 

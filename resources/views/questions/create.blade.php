@@ -16,7 +16,7 @@ Crear Pregunta
 			Crear Pregunta
 		</div>
 		<div class="panel-body">
-			<form method="post" action>
+			<form method="post" action enctype="multipart/form-data">
 				{{ csrf_field() }}
 				<div class="form-group">
 					<label>Pregunta</label>
@@ -46,7 +46,7 @@ Crear Pregunta
                     @endif
 				</div>
 				<div class="form-group">
-					<label>Opcion Bº</label>
+					<label>Opcion B</label>
 					<textarea class="form-control" name="optionB">{{ old('optionB') }}</textarea>
 					@if ($errors->has('optionB'))
                     <span class="help-block">
@@ -103,6 +103,19 @@ Crear Pregunta
                         <strong>{{ $errors->first('process_id') }}</strong>
                     </span>
                     @endif
+				</div>
+				<div class="form-group">
+					<label>Tema</label>
+					<input class="form-control" name="subject" value="{{ old('subject') }}">
+					@if ($errors->has('subject'))
+                    <span class="help-block">
+                        <strong>{{ $errors->first('subject') }}</strong>
+                    </span>
+                    @endif
+				</div>
+				<div class="form-group">
+					<label>Imagen</label>
+					<input type="file" name="image">
 				</div>
 				<div class="form-group">
 					<div class="checkbox">

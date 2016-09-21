@@ -24,6 +24,8 @@ class CreateQuestionsTable extends Migration
             $table->integer('process_id')->unsigned();
             $table->integer('area_id')->unsigned();
             $table->boolean('active')->default(true);
+            $table->string('image')->nullable();
+            $table->string('subject')->nullable();
             $table->timestamps();
             $table->softDeletes();
 
