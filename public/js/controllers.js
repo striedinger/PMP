@@ -1,5 +1,5 @@
 angular.module('app.controllers', [])
-.controller('SessionController', function($scope, $http, sessions, $log){
+.controller('SessionController', function($scope, $http, sessions, $log,$filter){
 	var pathname = window.location.href;
 	var session_id = pathname.split("/").pop(-1)
     $scope.pmp = {};
@@ -9,7 +9,7 @@ angular.module('app.controllers', [])
     $scope.pmp.qIndex = 0;
 	$scope.pmp.qCurrent = {};
 	$scope.pmp.qMarked = [];
-    $scope.pmp.qTotalAnswered  = 2; //TODO obtener de servidor
+    $scope.pmp.qTotalAnswered  = 0; //TODO obtener de servidor
 	$scope.pmp.dataHasLoaded = false;
     $scope.pmp.duration = 0;
     $scope.pmp.timerRunning = true;
@@ -47,7 +47,7 @@ angular.module('app.controllers', [])
         $scope.pmp.updated_at = $scope.pmp.data.session.updated_at;
         $scope.pmp.qIndex = 1;
         $scope.init_time = 0;
-
+        $scope.pmp.qTotalAnswered =  $scope.pmp.data.session.total_answered;
 //calcular tiempo restante cuando se da reload a la pagina
 
 
@@ -138,6 +138,7 @@ angular.module('app.controllers', [])
         var diffDays = Math.ceil(timeDiff / (1000 )); 
         return diffDays;
     }
+
 
 
 

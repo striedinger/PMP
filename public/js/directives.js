@@ -52,7 +52,7 @@
 
                 } else {
                     if (vm.question.marked == 0) {
-                        alert("ya confirmo esta pregunta.")
+                        swal("ya confirmo esta pregunta.")
                     } else {
                         vm.question.marked = 0;
                         vm.question.answer = null;
@@ -97,7 +97,7 @@
                     } else {
                         //Verificar si ya tiene una respuesta precargada o de pasos anteriores, en ese caso siguiente.
                         if (vm.question.answer == null) {
-                            alert("No ha seleccionado una respuesta.");
+                            swal("No ha seleccionado una respuesta.");
                         }else{
                             if (vm.question.number != vm.qTotal) {
                                 steps_question(1);
@@ -197,6 +197,7 @@
                         if (data.answer != null) {
                             vm.question = data.answer;
                              if (parseInt(vm.question.number) < vm.qTotal) {
+                                //$scope.$parent.pmp.qTotalAnswered++;
                                  steps_question(1); //cargar siguiente pregunta
                              }
                         } else {
