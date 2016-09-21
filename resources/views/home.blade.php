@@ -9,19 +9,22 @@ Inicio
     <div class="row">
         <div class="col-md-12">
             <div class="panel panel-default">
-                <div class="panel-heading">Dashboard</div>
+                <div class="panel-heading">Inicio</div>
 
                 <div class="panel-body">
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-                    tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-                    quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-                    consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-                    cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-                    proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                    <p>
+                        @if(Auth::user()->expiration>=date('Y-m-d'))
+                        <strong>{{ Auth::user()->name }}</strong>, tienes {{ ceil(abs(strtotime(Auth::user()->expiration) - strtotime(date('Y-m-d'))) / 86400) }} día(s) de acceso para disfrutar y practicar con tu simulador PMP. Si deseas ampliar tu suscripción puedes contactarnos a <a href="mailto:info@pmlsolutionsgroup.com">info@pmlsolutionsgroup.com</a>
+                        @else 
+                        <strong>{{ Auth::user()->name }}</strong>, no tienes una subscripción activa de acceso para disfrutar y practicar con tu simulador PMP. Para obtener tu suscripción puedes contactarnos a <a href="mailto:info@pmlsolutionsgroup.com">info@pmlsolutionsgroup.com</a>
+                        @endif
+                        
+                    </p>
                 </div>
             </div>
         </div>
     </div>
+    @if(Auth::user()->expiration>=date('Y-m-d'))
     <div class="row">
         @foreach($exams as $exam)
         <div class="col-xs-12 col-md-4">
@@ -56,5 +59,6 @@ Inicio
         </div>
         @endforeach
     </div>
+    @endif
 </div>
 @endsection

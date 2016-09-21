@@ -3,10 +3,10 @@
     angular.module('app.directives', []).directive('question', question);
 
     /** @ngInject */
-    function question() {
+    function question(apiConf) {
         var directive = {
             restrict: 'E',
-            templateUrl: '/pmp_hugo/PMP/public/js/templates/question.template.html',
+            templateUrl: apiConf.questionTemplate,
             //template: '<button type="button" class="btn btn-default">button</button>',
             scope: {
                 question: '='
@@ -125,7 +125,7 @@
 
                         swal("Redireccionado a resultados"); //Ultima pregunta
     /**************/
-                        window.location.replace("http://localhost/pmp_hugo/PMP/public/results"); //CAMBIAR
+                        window.location.replace(apiConf.resultUrl + vm.question.session_id); //CAMBIAR
                     }
                 }
 

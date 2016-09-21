@@ -1,5 +1,5 @@
 angular.module('app.controllers', [])
-.controller('SessionController', function($scope, $http, sessions, $log,$filter){
+.controller('SessionController', function($scope, $http, sessions, $log,$filter, apiConf){
 	var pathname = window.location.href;
 	var session_id = pathname.split("/").pop(-1)
     $scope.pmp = {};
@@ -122,7 +122,7 @@ angular.module('app.controllers', [])
         swal({
             text:"Se terminó el tiempo", 
         }).then(function(){
-                window.location.replace("http://localhost/pmp_hugo/PMP/public/results"); //CAMBIAR
+                window.location.replace(apiConf.resultUrl + session_id); //CAMBIAR
         });
     }
 

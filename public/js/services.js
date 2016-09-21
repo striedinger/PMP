@@ -13,8 +13,10 @@ angular.module('app.services', [])
   	.factory('sessions', sessions);
 
     /** @ngInject */
-    function sessions($log, $http,$filter) {
-        var apiHost = 'http://localhost/pmp_hugo/PMP/public/api';
+ 
+    function sessions($log, $http,$filter, apiConf) {
+        var apiHost = apiConf.apiHost;
+ 
         var service = {
             apiHost: apiHost,
             getSessions: getSessions,

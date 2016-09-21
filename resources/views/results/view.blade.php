@@ -20,7 +20,14 @@ Ver Resultado
 				<div class="col-xs-12 col-md-6">
 					<div id="circle">
 						<strong></strong>
-					</div>	
+					</div>
+					@if((count($correct)/$session->exam->questions * 100)<60)	
+					<p><strong>No pasaste el examen.</strong> Los temas que debes revisar son los siguientes:</p>
+					@elseif((count($correct)/$session->exam->questions * 100)>=60 && (count($correct)/$session->exam->questions * 100)>69)
+					<p><strong>Pasaste el examen,</strong> sin embargo debes revisar los siguientes temas:</p>
+					@else
+					<p><strong>Felicidades, has aprobado el examen satisfactoriamente.</strong> Algunos de los temas que deberías repasar para incrementar tu preparación son:	</p>
+					@endif
 				</div>
 				<div class="col-xs-12 col-md-6">
 					<ul class="nav nav-pills">
@@ -31,7 +38,7 @@ Ver Resultado
 						<div class="tab-pane active" id="areas">
 							@foreach($areas as $area)
 							@if($area_total[$area->id -1]>0)
-							<strong>{{ $area->name }}</strong><span class="pull-right">{{ ($area_result[$area->id - 1])/($area_total[$area->id - 1]) * 100  }}%</span>
+							<strong>{{ $area->name }}</strong><span class="pull-right">{{ round(($area_result[$area->id - 1])/($area_total[$area->id - 1]) * 100, 1)  }}%</span>
 							<div class="progress">
 								<div class="progress-bar progress-bar-striped active {{ (($area_result[$area->id - 1])/($area_total[$area->id - 1]) * 100 > 70) ? 'progress-bar-success' : 'progress-bar-danger' }}" style="width: {{ ($area_result[$area->id - 1])/($area_total[$area->id - 1]) * 100  }}%;"></div>
 							</div>
@@ -41,7 +48,7 @@ Ver Resultado
 						<div class="tab-pane" id="processes">
 							@foreach($processes as $process)
 							@if($process_total[$process->id -1]>0)
-							<strong>{{ $process->name }}</strong><span class="pull-right">{{ ($process_result[$process->id - 1])/($process_total[$process->id - 1]) * 100  }}%</span>
+							<strong>{{ $process->name }}</strong><span class="pull-right">{{ round(($process_result[$process->id - 1])/($process_total[$process->id - 1]) * 100, 1)  }}%</span>
 							<div class="progress">
 								<div class="progress-bar progress-bar-striped active {{ (($process_result[$process->id - 1])/($process_total[$process->id - 1]) * 100 > 70) ? 'progress-bar-success' : 'progress-bar-danger' }}" style="width: {{ ($process_result[$process->id - 1])/($process_total[$process->id - 1]) * 100  }}%;"></div>
 							</div>
