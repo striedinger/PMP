@@ -26,7 +26,7 @@ Examen
 				<div class="panel-body">
 					<uib-progressbar max="pmp.qTotal" value="pmp.qTotalAnswered"><span style="color:white; white-space:nowrap;">@{{pmp.qTotalAnswered}} / @{{pmp.qTotal}}</span></uib-progressbar>
 					<p>Pregunta @{{pmp.qIndex}} de @{{pmp.qTotal}}</p>
-					<p>Tiempo dedicado: 
+					<p>Tiempo restante: 
 					<timer ng-if="infinito"  interval="1000" start-time="init_time" autostart="false"  finish-callback="finished()">@{{ddays}}:@{{hhours}}:@{{mminutes}}:@{{sseconds}}</timer>
 					<timer ng-if="!infinito" interval="1000" countdown="1000" finish-callback="finished()">@{{hhours}}:@{{mminutes}}:@{{sseconds}}</timer>
 					</p>
@@ -36,10 +36,7 @@ Examen
 						<div class="collapse" id="marked">
 							
 						</div>
-						<ul>
-								<li ng-repeat="marked in pmp.qMarked" ng-click="changeQuestion(marked.number)">@{{marked.number}}</li>
-								 
-							</ul>
+						<span ng-repeat="marked in pmp.qMarked" ng-click="changeQuestion(marked.number)" class="label label-primary" style="margin-right:5px !important">@{{marked.number}}</span>
 					</p>
 				</div>
 			</div>

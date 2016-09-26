@@ -28,13 +28,13 @@
 					<button class="btn btn-warning " ng-click="vm.marcar()" ng-disabled="vm.isMarkDisabled()"><i class="fa fa-pencil"></i> Marcar</button>
 				</div>
 				<div class="btn-group" ng-show="!vm.isLastQ() && vm.isNextDisabled()">
-					<button class="btn btn-success" ng-click="vm.next()" ng-disabled="vm.isConfirmarDisabled()"> Confirmar <i class="fa fa-arrow-right"></i></button>
+					<button class="btn btn-success" ng-click="vm.next()" ng-disabled="vm.isConfirmarDisabled()"> Siguiente <i class="fa fa-arrow-right"></i></button>
 				</div>
 				<div class="btn-group" ng-show="!vm.isLastQ() && !vm.isNextDisabled()">
 					<button class="btn btn-success" ng-click="vm.next()" ng-disabled="vm.isNextDisabled()"> Siguiente <i class="fa fa-arrow-right"></i></button>
 				</div>
 				<div class="btn-group" ng-show="vm.isLastQ()">
-					<button class="btn btn-default" ng-click="vm.next()" ng-disabled="vm.isConfirmarDisabled()"><i class="fa fa-arrow-right"></i> finalizar</button>
+					<button class="btn btn-default" ng-click="vm.next()" ng-disabled="vm.isConfirmarDisabled()"><i class="fa fa-arrow-right"></i> Finalizar</button>
 				</div>
 			</div>
 			 

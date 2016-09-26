@@ -40,7 +40,7 @@ class DatabaseSeeder extends Seeder
         //Users
 
 		DB::table('users')->delete();
-        $adminUser = User::create(['id' => 1, 'name' => 'Administrador', 'email' => 'hugostriedinger@hotmail.com', 'password' => Hash::make('qwerty')]);
+        $adminUser = User::create(['id' => 1, 'name' => 'Administrador', 'email' => 'admin@email.com', 'password' => Hash::make('qwerty')]);
         $adminUser->attachRole(1);
 
         $user = User::create(['id' => 2, 'name' => 'Usuario', 'email' => 'user@email.com', 'password' => Hash::make('qwerty')]);
@@ -48,25 +48,25 @@ class DatabaseSeeder extends Seeder
 
         //Areas
         DB::table('areas')->delete();
-        Area::create(['name' => 'Gestión de la Integración']);
-        Area::create(['name' => 'Gestión del Alcance']);
-        Area::create(['name' => 'Gestión del Tiempo']);
-        Area::create(['name' => 'Gestión de los Costos']);
-        Area::create(['name' => 'Gestión de la Calidad']);
-        Area::create(['name' => 'Gestión de los Recursos Humanos']);
-        Area::create(['name' => 'Gestión de las Comunicaciones']);
-        Area::create(['name' => 'Gestión de los Riesgos']);
-        Area::create(['name' => 'Gestión de las Adquisiciones']);
-        Area::create(['name' => 'Gestión de los Interesados']);
+        Area::create(['name' => 'Gestión de la Integración']);//1
+        Area::create(['name' => 'Gestión del Alcance']);//2
+        Area::create(['name' => 'Gestión del Tiempo']);//3
+        Area::create(['name' => 'Gestión de los Costos']);//4
+        Area::create(['name' => 'Gestión de la Calidad']);//5
+        Area::create(['name' => 'Gestión de los Recursos Humanos']);//6
+        Area::create(['name' => 'Gestión de las Comunicaciones']);//7
+        Area::create(['name' => 'Gestión de los Riesgos']);//8
+        Area::create(['name' => 'Gestión de las Adquisiciones']);//9
+        Area::create(['name' => 'Gestión de los Interesados']);//10
+        Area::create(['name' => 'Marco de Referencia y Procesos de Dirección']);//11
 
         //Processes
         DB::table('processes')->delete();
-        Process::create(['name' => 'Inicio']);
-        Process::create(['name' => 'Planeación']);
-        Process::create(['name' => 'Ejecución']);
-        Process::create(['name' => 'Seguimiento y Control']);
-        Process::create(['name' => 'Cierre']);
-        Process::create(['name' => 'Ética y Responsabilidad']);
+        Process::create(['name' => 'Inicio']);//1
+        Process::create(['name' => 'Planeación']);//2
+        Process::create(['name' => 'Ejecución']);//3
+        Process::create(['name' => 'Seguimiento y Control']);//4
+        Process::create(['name' => 'Cierre']);//5
 
         //Plans
         DB::table('plans')->delete();
@@ -76,12 +76,12 @@ class DatabaseSeeder extends Seeder
 
         //Exams
         DB::table('exams')->delete();
-        Exam::create(['name' => 'Examen Aleatorio', 'questions' => 10, 'duration' => 10, 'type' => 'Aleatorio']);
-        Exam::create(['name' => 'Examen por Area', 'questions' => 10, 'duration' => 10, 'type' => 'Area']);
-        Exam::create(['name' => 'Examen por Proceso', 'questions' => 10, 'duration' => 10, 'type' => 'Proceso']);
+        Exam::create(['name' => 'Examen General', 'questions' => 10, 'duration' => 10, 'type' => 'Aleatorio']);
+        Exam::create(['name' => 'Examen por Area de Conocimiento', 'questions' => 10, 'duration' => 10, 'type' => 'Area']);
+        Exam::create(['name' => 'Examen por Grupo de Proceso', 'questions' => 10, 'duration' => 10, 'type' => 'Proceso']);
 
         //Questions
-        DB::table('questions')->delete();
+        /*DB::table('questions')->delete();
         for($i=0;$i<200;$i++){
             Question::create([
                 'question' => $faker->text, 
@@ -95,14 +95,14 @@ class DatabaseSeeder extends Seeder
                  'area_id' => $faker->numberBetween(1, 10), 
                  'active' => true
                 ]);
-        } 
+        }*/
 
         //Sessions
-        DB::table('sessions')->delete();
-        Session::create(['user_id' => 2, 'exam_id' => 1]); 
+        /*DB::table('sessions')->delete();
+        Session::create(['user_id' => 2, 'exam_id' => 1]);*/
 
         //Answers
-        DB::table('answers')->delete();
+        /*DB::table('answers')->delete();
         $n = $faker->numberBetween(1,40);
         for($i=1;$i<=10;$i++){
             Answer::create([
@@ -110,6 +110,6 @@ class DatabaseSeeder extends Seeder
                 'question_id' => $n+$i,
                 'number' => $i
             ]);
-        }     
+        }*/  
     }
 }

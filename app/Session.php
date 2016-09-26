@@ -34,4 +34,13 @@ class Session extends Model
     public function process(){
         return $this->belongsTo(Process::class);
     }
+
+    public function isComplete(){
+        foreach($this->answers as $answer){
+            if($answer->answer==null){
+                return false;
+            }
+        }
+        return true;
+    }
 }

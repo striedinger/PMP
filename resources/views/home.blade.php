@@ -13,12 +13,15 @@ Inicio
 
                 <div class="panel-body">
                     <p>
-                        @if(Auth::user()->expiration>=date('Y-m-d'))
-                        <strong>{{ Auth::user()->name }}</strong>, tienes {{ ceil(abs(strtotime(Auth::user()->expiration) - strtotime(date('Y-m-d'))) / 86400) }} día(s) de acceso para disfrutar y practicar con tu simulador PMP. Si deseas ampliar tu suscripción puedes contactarnos a <a href="mailto:info@pmlsolutionsgroup.com">info@pmlsolutionsgroup.com</a>
+                        @if(!Auth::user()->isAdmin())
+                            @if(Auth::user()->expiration>=date('Y-m-d'))
+                                <p><strong>{{ Auth::user()->name }}</strong>, tienes {{ ceil(abs(strtotime(Auth::user()->expiration) - strtotime(date('Y-m-d'))) / 86400) }} día(s) de acceso para disfrutar y practicar con tu simulador PMP. Si deseas ampliar tu suscripción puedes contactarnos a <a href="mailto:info@pmlsolutionsgroup.com">info@pmlsolutionsgroup.com</a></p>
+                            @else 
+                                <p><strong>{{ Auth::user()->name }}</strong>, no tienes una subscripción activa de acceso para disfrutar y practicar con tu simulador PMP. Para obtener tu suscripción puedes contactarnos a <a href="mailto:info@pmlsolutionsgroup.com">info@pmlsolutionsgroup.com</a></p>
+                            @endif
                         @else 
-                        <strong>{{ Auth::user()->name }}</strong>, no tienes una subscripción activa de acceso para disfrutar y practicar con tu simulador PMP. Para obtener tu suscripción puedes contactarnos a <a href="mailto:info@pmlsolutionsgroup.com">info@pmlsolutionsgroup.com</a>
+                            <p><strong>{{ Auth::user()->name }}</strong>, desde aquí podrás configurar todo lo relacionado a los exámenes, preguntas y usuarios. Además, podrás ver los resultados en tiempo real de los usuarios.</p>
                         @endif
-                        
                     </p>
                 </div>
             </div>
@@ -28,7 +31,7 @@ Inicio
     <div class="row">
         @foreach($exams as $exam)
         <div class="col-xs-12 col-md-4">
-            <div class="panel panel-primary">
+            <div class="panel {{ ($exam->type=='Aleatorio')? 'panel-success' : (($exam->type=='Area')? 'panel-info' : 'panel-warning') }}">
                 <div class="panel-heading">
                     {{ $exam->name }}
                 </div>
@@ -39,16 +42,16 @@ Inicio
                     <p><strong>Tipo de Examen: </strong>{{ $exam->type }}</p>
                     <p><strong>Numero de Preguntas: </strong> {{ $exam->questions }}</p>
                     <p><strong>Duracíon: </strong>{{ ($exam->duration!=0)? $exam->duration : 'Ilimitada' }}</p>
-                    {!! Form::open(['action' => array('SessionController@create', $exam->id), 'method' => 'get']) !!}
+                    {!! Form::open(['action' => array('SessionController@create', $exam->id), 'method' => 'get', 'onsubmit' => 'return confirm("¿Estas seguro de querer  iniciar este examen?")']) !!}
                     @if($exam->type=='Area')
                     <div class="form-group">
-                        <label>Area:</label>
+                        <label>Area de Conocimiento:</label>
                         {{ Form::select('area_id', $areas, null, ['class' => 'form-control']) }}
                     </div>
                     @endif
                     @if($exam->type=='Proceso')
                     <div class="form-group">
-                        <label>Proceso:</label>
+                        <label>Grupo de Proceso:</label>
                         {{ Form::select('process_id', $processes, null, ['class' => 'form-control']) }}
                     </div>
                     @endif

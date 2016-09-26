@@ -21,7 +21,7 @@ class TransactionController extends Controller
 
     public function create(Request $request, $id){
     	if($user = $this->users->forId($id)){
-            $plan = \App\Plan::find($id);
+            $plan = \App\Plan::find($request->plan_id);
             if(strtotime($user->expiration) <= date("Y-m-d")){
                 $date = new \DateTime();
                 $date->modify('+' . $plan->duration . ' days');

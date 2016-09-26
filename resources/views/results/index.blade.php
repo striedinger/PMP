@@ -30,7 +30,7 @@ Resultados
 					<td>{{ $session->exam->name }}</td>
 					<td>{{ $session->user->name }}</td>
 					<td>
-						@if($session->time!=0)
+						@if($session->time!=0 && !$session->isComplete())
 						<a href="{{ url('/sessions') . '/' . $session->id }}" class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i></a>
 						@endif
 						<a href="{{ url('/results') . '/' . $session->id }}" class="btn btn-primary btn-xs"><i class="fa fa-search"></i></a>

@@ -7,6 +7,9 @@ use App\Http\Requests;
 use App\Repositories\QuestionRepository;
 use App\Question;
 use Excel;
+use PHPExcel; 
+use PHPExcel_IOFactory;
+use DB;
 
 class QuestionController extends Controller
 {
@@ -120,10 +123,83 @@ class QuestionController extends Controller
     public function import(Request $request){
         if($request->isMethod('post')){
             if($request->hasFile('file')){
-                Excel::load($request->file('file'), function($reader){
-                    $results = $reader->get();
-                    return $results->toArray();
+                $objPHPExcel = PHPExcel_IOFactory::load($request->file('file'));
+                $objWorksheet = $objPHPExcel->getActiveSheet();
+                $highestRow = $objWorksheet->getHighestRow();
+                DB::transaction(function() use($highestRow, $objWorksheet){
+                    for ($row = 2; $row <= $highestRow; ++$row) {
+                        switch($objWorksheet->getCellByColumnAndRow(8, $row)){
+                            case 'Adquisiciones':
+                                $area = 9;
+                                break;
+                            case 'Alcance':
+                                $area = 2;
+                                break;
+                            case 'Calidad':
+                                $area = 5;
+                                break;
+                            case 'Comunicaciones':
+                                $area = 7;
+                                break;
+                            case 'Costos':
+                                $area = 4;
+                                break;
+                            case 'Integración':
+                                $area = 1;
+                                break;
+                            case 'Interesados':
+                                $area = 10;
+                                break;
+                            case 'Marco de referencia y Procesos de Dirección':
+                                $area = 11;
+                                break;
+                            case 'Recursos humanos':
+                                $area = 6;
+                                break;
+                            case 'Riesgos':
+                                $area = 8;
+                                break;
+                            case 'Tiempo':
+                                $area = 3;
+                                break;
+                            default:
+                                $area = 1;
+                        }
+                        switch($objWorksheet->getCellByColumnAndRow(9, $row)){
+                            case 'Inicio':
+                                $process = 1;
+                                break;
+                            case 'Cierre':
+                                $process = 5;
+                                break;
+                            case 'Ejecución':
+                                $process = 3;
+                                break;
+                            case 'Planeación':
+                                $process = 2;
+                                break;
+                            case 'Seguimiento y Control':
+                                $process = 4;
+                                break;
+                            default:
+                                $process = 1;
+                        }
+                        Question::create([
+                            'question' => $objWorksheet->getCellByColumnAndRow(1, $row),
+                            'optionA' => $objWorksheet->getCellByColumnAndRow(2, $row),
+                            'optionB' => $objWorksheet->getCellByColumnAndRow(3, $row),
+                            'optionC' => $objWorksheet->getCellByColumnAndRow(4, $row),
+                            'optionD' => $objWorksheet->getCellByColumnAndRow(5, $row),
+                            'answer' => $objWorksheet->getCellByColumnAndRow(6, $row),
+                            'description' => $objWorksheet->getCellByColumnAndRow(7, $row),
+                            'area_id' => $area,
+                            'process_id' => $process,
+                            'subject' => $objWorksheet->getCellByColumnAndRow(10, $row),
+                        ]);
+                    }
                 });
+                $request->session()->flash('status', 'Se han importado las preguntas del archivo.');
+                return redirect('/questions');
             }else{
                 abort(404);
             }

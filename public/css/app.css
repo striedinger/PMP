@@ -23,6 +23,10 @@
   text-overflow: ellipsis;
 }
 
+.label-round{
+  border-radius: 10px !important;
+}
+
 #circle {
     width: 100%;
     height:auto;
@@ -35,12 +39,12 @@
 
 #circle strong {
     position: absolute;
-    top: 30px;
+    top: 45px;
     left: 0;
     width: 100%;
     text-align: center;
-    line-height: 40px;
-    font-size: 30px;
+    line-height: 50px;
+    font-size: 45px;
 }
 
 /* Questions */

@@ -9,24 +9,43 @@ Ver Resultado
 	<ol class="breadcrumb">
 		<li><a href="{{ url('/results') }}">Resultados</a></li>
 		<li class="active">Ver Resultado</li>
+		@if(Auth::user()->isAdmin())
+		<li class="active">hecho por {{ $session->user->name }}</li>
+		@endif
 	</ol>
 	<ul class="nav nav-tabs nav-justified" role="tablist">
 		<li role="presentation" class="active"><a href="#general" aria-controls="general" role="tab" data-toggle="tab">Resultado General</a></li>
-		<li role="presentation" ><a href="#questions" aria-controls="questions" role="tab" data-toggle="tab">Preguntas</a></li>
+		<li role="presentation" ><a href="#questions" aria-controls="questions" role="tab" data-toggle="tab">Revisión de Preguntas</a></li>
 	</ul>
 	<div class="tab-content">
 		<div class="tab-pane active has-padding fade in" id="general">
 			<div class="row">
 				<div class="col-xs-12 col-md-6">
+					<div class="">
+					@if((count($correct)/$session->exam->questions * 100)<60)	
+					<p><strong>No pasaste el examen.</strong></p>
+					@elseif((count($correct)/$session->exam->questions * 100)>=60 && (count($correct)/$session->exam->questions * 100)>69)
+					<p><strong>Pasaste el examen,</strong></p>
+					@else
+					<p><strong>Felicidades, has aprobado el examen satisfactoriamente.</strong></p>
+					@endif
+					</div>
 					<div id="circle">
 						<strong></strong>
 					</div>
-					@if((count($correct)/$session->exam->questions * 100)<60)	
-					<p><strong>No pasaste el examen.</strong> Los temas que debes revisar son los siguientes:</p>
-					@elseif((count($correct)/$session->exam->questions * 100)>=60 && (count($correct)/$session->exam->questions * 100)>69)
-					<p><strong>Pasaste el examen,</strong> sin embargo debes revisar los siguientes temas:</p>
-					@else
-					<p><strong>Felicidades, has aprobado el examen satisfactoriamente.</strong> Algunos de los temas que deberías repasar para incrementar tu preparación son:	</p>
+					@if(count($subjects)>0)
+						@if((count($correct)/$session->exam->questions * 100)<60)	
+							<p>Los temas que debes revisar son los siguientes:</p>
+						@elseif((count($correct)/$session->exam->questions * 100) >= 60 && (count($correct)/$session->exam->questions * 100) > 69)
+							<p>Sin embargo debes revisar los siguientes temas:</p>
+						@else
+							<p>Algunos de los temas que deberías repasar para incrementar tu preparación son:	</p>
+						@endif
+						<ul>
+						@for($i=0;$i<count($subjects);$i++)
+							<li>{{ $subjects[$i] }}</li>
+						@endfor
+						</ul>
 					@endif
 				</div>
 				<div class="col-xs-12 col-md-6">
@@ -40,7 +59,7 @@ Ver Resultado
 							@if($area_total[$area->id -1]>0)
 							<strong>{{ $area->name }}</strong><span class="pull-right">{{ round(($area_result[$area->id - 1])/($area_total[$area->id - 1]) * 100, 1)  }}%</span>
 							<div class="progress">
-								<div class="progress-bar progress-bar-striped active {{ (($area_result[$area->id - 1])/($area_total[$area->id - 1]) * 100 > 70) ? 'progress-bar-success' : 'progress-bar-danger' }}" style="width: {{ ($area_result[$area->id - 1])/($area_total[$area->id - 1]) * 100  }}%;"></div>
+								<div class="progress-bar progress-bar-striped {{ (($area_result[$area->id - 1])/($area_total[$area->id - 1]) * 100 > 70) ? 'progress-bar-success' : 'progress-bar-danger' }}" style="width: {{ ($area_result[$area->id - 1])/($area_total[$area->id - 1]) * 100  }}%;"></div>
 							</div>
 							@endif
 							@endforeach
@@ -50,7 +69,7 @@ Ver Resultado
 							@if($process_total[$process->id -1]>0)
 							<strong>{{ $process->name }}</strong><span class="pull-right">{{ round(($process_result[$process->id - 1])/($process_total[$process->id - 1]) * 100, 1)  }}%</span>
 							<div class="progress">
-								<div class="progress-bar progress-bar-striped active {{ (($process_result[$process->id - 1])/($process_total[$process->id - 1]) * 100 > 70) ? 'progress-bar-success' : 'progress-bar-danger' }}" style="width: {{ ($process_result[$process->id - 1])/($process_total[$process->id - 1]) * 100  }}%;"></div>
+								<div class="progress-bar progress-bar-striped {{ (($process_result[$process->id - 1])/($process_total[$process->id - 1]) * 100 > 70) ? 'progress-bar-success' : 'progress-bar-danger' }}" style="width: {{ ($process_result[$process->id - 1])/($process_total[$process->id - 1]) * 100  }}%;"></div>
 							</div>
 							@endif
 							@endforeach
@@ -63,7 +82,7 @@ Ver Resultado
 			<div class="row">
 				<div class="col-xs-12 col-md-6">
 					<div class="alert alert-success">
-						<p>Preguntas respondidas <strong>correctamente</strong> <span class="badge pull-right">{{ count($correct) }}</span></p>
+						<p>Preguntas respondidas <strong>correctamente</strong> <i class="fa fa-check"></i> <span class="badge pull-right">{{ count($correct) }}</span></p>
 					</div>
 					@foreach($correct as $c)
 					<div>
@@ -75,16 +94,16 @@ Ver Resultado
 								<div class="col-xs-4" align="right">
 									<ul class="list-inline">
 										<li>
-											<span class="label {{ ($c->answer=='A')? (($c->answer==$c->question->answer)? 'label-success' : 'label-danger'): (($c->question->answer == 'A')? 'label-success' : 'label-default') }}">A</span>
+											<span class="label label-round {{ ($c->answer=='A')? (($c->answer==$c->question->answer)? 'label-success' : 'label-danger'): (($c->question->answer == 'A')? 'label-success' : 'label-default') }}">A</span>
 										</li>
 										<li>
-											<span class="label {{ ($c->answer=='B')? (($c->answer==$c->question->answer)? 'label-success' : 'label-danger'): (($c->question->answer == 'B')? 'label-success' : 'label-default') }}">B</span>
+											<span class="label label-round {{ ($c->answer=='B')? (($c->answer==$c->question->answer)? 'label-success' : 'label-danger'): (($c->question->answer == 'B')? 'label-success' : 'label-default') }}">B</span>
 										</li>
 										<li>
-											<span class="label {{ ($c->answer=='C')? (($c->answer==$c->question->answer)? 'label-success' : 'label-danger'): (($c->question->answer == 'C')? 'label-success' : 'label-default') }}">C</span>
+											<span class="label label-round {{ ($c->answer=='C')? (($c->answer==$c->question->answer)? 'label-success' : 'label-danger'): (($c->question->answer == 'C')? 'label-success' : 'label-default') }}">C</span>
 										</li>
 										<li>
-											<span class="label {{ ($c->answer=='D')? (($c->answer==$c->question->answer)? 'label-success' : 'label-danger'): (($c->question->answer == 'D')? 'label-success' : 'label-default') }}">D</span>
+											<span class="label label-round {{ ($c->answer=='D')? (($c->answer==$c->question->answer)? 'label-success' : 'label-danger'): (($c->question->answer == 'D')? 'label-success' : 'label-default') }}">D</span>
 										</li>
 									</ul>
 								</div>
@@ -114,7 +133,7 @@ Ver Resultado
 				</div>
 				<div class="col-xs-12 col-md-6">
 					<div class="alert alert-danger">
-						<p>Preguntas respondidas <strong>erroneamente</strong> <span class="badge pull-right">{{ count($wrong) }}</span></p>
+						<p>Preguntas respondidas <strong>erroneamente</strong> <i class="fa fa-close"></i><span class="badge pull-right">{{ count($wrong) }}</span></p>
 					</div>
 					@foreach($wrong as $c)
 					<div>
@@ -126,16 +145,16 @@ Ver Resultado
 								<div class="col-xs-4" align="right">
 									<ul class="list-inline">
 										<li>
-											<span class="label {{ ($c->answer=='A')? (($c->answer==$c->question->answer)? 'label-success' : 'label-danger'): (($c->question->answer == 'A')? 'label-success' : 'label-default') }}">A</span>
+											<span class="label label-round {{ ($c->answer=='A')? (($c->answer==$c->question->answer)? 'label-success' : 'label-danger'): (($c->question->answer == 'A')? 'label-success' : 'label-default') }}">A</span>
 										</li>
 										<li>
-											<span class="label {{ ($c->answer=='B')? (($c->answer==$c->question->answer)? 'label-success' : 'label-danger'): (($c->question->answer == 'B')? 'label-success' : 'label-default') }}">B</span>
+											<span class="label label-round {{ ($c->answer=='B')? (($c->answer==$c->question->answer)? 'label-success' : 'label-danger'): (($c->question->answer == 'B')? 'label-success' : 'label-default') }}">B</span>
 										</li>
 										<li>
-											<span class="label {{ ($c->answer=='C')? (($c->answer==$c->question->answer)? 'label-success' : 'label-danger'): (($c->question->answer == 'C')? 'label-success' : 'label-default') }}">C</span>
+											<span class="label label-round {{ ($c->answer=='C')? (($c->answer==$c->question->answer)? 'label-success' : 'label-danger'): (($c->question->answer == 'C')? 'label-success' : 'label-default') }}">C</span>
 										</li>
 										<li>
-											<span class="label {{ ($c->answer=='D')? (($c->answer==$c->question->answer)? 'label-success' : 'label-danger'): (($c->question->answer == 'D')? 'label-success' : 'label-default') }}">D</span>
+											<span class="label label-round {{ ($c->answer=='D')? (($c->answer==$c->question->answer)? 'label-success' : 'label-danger'): (($c->question->answer == 'D')? 'label-success' : 'label-default') }}">D</span>
 										</li>
 									</ul>
 								</div>
@@ -177,6 +196,7 @@ Ver Resultado
 		});
 		$('#circle').circleProgress({
 			value: {{ count($correct)/$session->exam->questions }},
+			size: 150,
 		}).on('circle-animation-progress', function(event, progress, stepValue) {
 			$(this).find('strong').html(parseInt(100 * stepValue.toFixed(2).substr(1)) + '<i>%</i>');
 		});

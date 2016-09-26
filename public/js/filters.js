@@ -1,3 +1,5 @@
+(function() {
+  'use strict';
 // Setup the filter
 angular.module("app")
 .filter('marked', function() {
@@ -46,3 +48,4 @@ app.filter('getById', function() {
     return null;
   }
 });
+})();
